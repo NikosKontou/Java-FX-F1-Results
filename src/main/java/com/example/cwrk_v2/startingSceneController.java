@@ -12,5 +12,7 @@ public class startingSceneController {
     }
     public void goToMainMenuEvent(){
 
+
     }
+
 }
