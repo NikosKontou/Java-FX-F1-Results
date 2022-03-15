@@ -15,7 +15,7 @@
             <HBox alignment="CENTER" spacing="20.0">
                <children>
                   <Button fx:id="goToMainMenu" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#goToMainMenuEvent" text="log out" textAlignment="JUSTIFY" BorderPane.alignment="CENTER" />
-                  <Label fx:id="nameLabel" text="username" />
+                  <Label fx:id="nameLabel" text="Guest" />
                </children>
             </HBox>
             <Label contentDisplay="CENTER" text="Main menu scene" textAlignment="CENTER">
@@ -32,8 +32,8 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" text="Προβολή" wrapText="true" />
-            <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" text="Εισαγωγή" />
+            <Button fx:id="showData" mnemonicParsing="false" onAction="#showDataEvent" prefHeight="70.0" prefWidth="70.0" text="Προβολή" wrapText="true" />
+            <Button fx:id="insertData" mnemonicParsing="false" onAction="#insertDataEvent" prefHeight="70.0" prefWidth="70.0" text="Εισαγωγή" />
          </children>
       </HBox>
    </center>
