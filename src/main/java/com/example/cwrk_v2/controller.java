@@ -10,19 +10,27 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class controller {
     //inject fxml to access the field
     @FXML
      TextField usernameTField;
+    @FXML
+    TextField passwordTField;
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    public void logInToStartMenu(ActionEvent event) throws IOException {
+    public void logInToStartMenu(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         //extract the textfiled value
         String username = usernameTField.getText();
+        String password = passwordTField.getText();
+        System.out.println("uname is: "+username + " password is: "+password);
+        DBActions dba = new DBActions();
+        dba.userLogIn(username, password);
+
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("startingScene.fxml"));
         root = loader.load();
@@ -39,5 +47,11 @@ public class controller {
 
     public void logoutFromMainMenu( ActionEvent event) throws IOException {
 
+    }
+    public void createAndPopulateTables( ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
+        DBActions db = new DBActions();
+       // db.createTables();
+        //db.populateTables();
+        System.out.println("tables created!");
     }
 }
