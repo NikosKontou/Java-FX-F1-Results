@@ -31,11 +31,20 @@ public class startingSceneController {
         stage.show();
 
     }
-    public void showDataEvent(){
+    public void showDataEvent(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("readData.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
     public void insertDataEvent(ActionEvent event) throws IOException {
-
+        root = FXMLLoader.load(getClass().getResource("insertRaceData.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

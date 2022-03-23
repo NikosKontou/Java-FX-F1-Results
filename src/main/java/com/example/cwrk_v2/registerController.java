@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,29 +22,13 @@ public class registerController {
     TextField passwordTField;
     @FXML
     TextField confirmPasswordTField;
+    @FXML
+    Label messageLabel;
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    public void logInToStartMenu(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
-        //extract the textfiled value
-        String username = usernameTField.getText();
-        String password = passwordTField.getText();
-        String confirmPassword = confirmPasswordTField.getText();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("startingScene.fxml"));
-            root = loader.load();
-
-            startingSceneController scene2Controller = loader.getController();
-            scene2Controller.displayName(username);
-
-            //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
 
         public void goToLogIn(ActionEvent event) throws IOException{
 
@@ -55,7 +41,20 @@ public class registerController {
             stage.setScene(scene);
             stage.show();
     }
-    public void registerUser (ActionEvent event){
+    public void registerUser (ActionEvent event) throws SQLException, ClassNotFoundException {
+        //extract the textfiled value
+        String username = usernameTField.getText();
+        String password = passwordTField.getText();
+        DBActions dba = new DBActions();
+        String confirmPassword = confirmPasswordTField.getText();
+        if (password.equals(confirmPassword)){
+            dba.userRegister(username, password);
+            messageLabel.setTextFill(Color.rgb(30,250,80));
+            messageLabel.setText("Passwords match and user was created");
+        }else   {
+            messageLabel.setTextFill(Color.rgb(250,80,30));
+            messageLabel.setText("Passwords do not match, try again");
+        }
 
     }
 

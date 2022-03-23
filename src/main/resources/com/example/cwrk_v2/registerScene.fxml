@@ -42,4 +42,14 @@
             </children>
         </VBox>
     </center>
+   <top>
+      <HBox alignment="CENTER">
+         <children>
+            <Label fx:id="messageLabel" BorderPane.alignment="CENTER" />
+         </children>
+         <opaqueInsets>
+            <Insets bottom="2.0" />
+         </opaqueInsets>
+      </HBox>
+   </top>
 </BorderPane>
