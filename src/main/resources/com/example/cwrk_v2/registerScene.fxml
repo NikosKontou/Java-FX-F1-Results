@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cwrk_v2.registerController">
+    <center>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Label text="username" />
+                        <TextField fx:id="usernameTField" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Label text="password" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <TextField fx:id="passwordTField" />
+                    </children>
+                </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Confirm password" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <TextField fx:id="confirmPasswordTField" />
+               </children>
+            </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="registerUserButton" alignment="CENTER" mnemonicParsing="false" onAction="#registerUser" text="Register" textAlignment="CENTER" />
+                        <Label fx:id="loginWarning" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" />
+                  <Hyperlink fx:id="goToLogInLink" onAction="#goToLogIn" text="Go to log in page" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

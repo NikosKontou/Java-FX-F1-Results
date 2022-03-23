@@ -87,17 +87,29 @@ public class DBActions {
 
     }
 
-    public void userLogIn(String username, String password) throws SQLException {
+    public boolean userLogIn(String username, String password) throws SQLException {
         ResultSet res = stmt.executeQuery("SELECT * FROM users");
-
+        boolean result= false;
         while (res.next()) {
             String uID = (res.getObject("uID").toString());
             String uName = (res.getObject("uName").toString());
             String uPass = (res.getObject("uPass").toString());
             if (username.equals(uName)&& password.equals(uPass)){
                 System.out.println("Succefully loged in "+ uName);
+                result=  true;
             }
             }
+        return result;
+    }
+    public void userRegister (String username, String password) throws SQLException{
+        String sql = "INSERT INTO users (uName, uPass, isAdmin) VALUES (?, ?, 0)";
+
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, username);
+        pst.setString(2, password);
+        pst.executeUpdate();
+
+
     }
 
 
@@ -115,21 +127,6 @@ public class DBActions {
         stmt.close();
         conn.close();
     }
-    public void insertPrepared(String uName, String uPass) throws SQLException {
 
-
-
-        String sql = "INSERT INTO car (brand, years) VALUES (?,?)";
-
-
-
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, uName);
-        pst.setString(2, uPass);
-        pst.executeUpdate();
-
-
-
-    }
 
 }

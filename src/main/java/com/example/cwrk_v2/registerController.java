@@ -12,12 +12,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class controller {
+public class registerController {
     //inject fxml to access the field
     @FXML
-     TextField usernameTField;
+    TextField usernameTField;
     @FXML
     TextField passwordTField;
+    @FXML
+    TextField confirmPasswordTField;
 
     private Stage stage;
     private Scene scene;
@@ -27,8 +29,7 @@ public class controller {
         //extract the textfiled value
         String username = usernameTField.getText();
         String password = passwordTField.getText();
-        DBActions dba = new DBActions();
-        if(dba.userLogIn(username, password)){
+        String confirmPassword = confirmPasswordTField.getText();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("startingScene.fxml"));
             root = loader.load();
@@ -37,33 +38,25 @@ public class controller {
             scene2Controller.displayName(username);
 
             //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+        public void goToLogIn(ActionEvent event) throws IOException{
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("loginScene.fxml"));
+            root = loader.load();
+
+            //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } else  {
-            System.out.println("failed to log in");
-        }
-
+    }
+    public void registerUser (ActionEvent event){
 
     }
 
-    public void logoutFromMainMenu( ActionEvent event) throws IOException {
-
-    }
-    public void createAndPopulateTables( ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
-        DBActions db = new DBActions();
-       // db.createTables();
-        //db.populateTables();
-        System.out.println("tables created!");
-    }
-    public void registerUser(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("registerScene.fxml"));
-        root = loader.load();
-
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 }
