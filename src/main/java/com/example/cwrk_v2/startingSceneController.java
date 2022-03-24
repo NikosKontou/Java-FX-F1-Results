@@ -17,10 +17,14 @@ public class startingSceneController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
+    String username;
+    //pairnei to username kai to provalei
     public void displayName (String username){
+        UserHolder uh = null;
+        //petaei exception otan einai null apo ta alla scenes pou den exoun ayti thn leitoyrgia akoma
         if (!username.isEmpty()) {
-            nameLabel.setText(username);
+            nameLabel.setText(uh.userName);
+            this.username= uh.userName;
         }
     }
     public void goToMainMenuEvent(ActionEvent event) throws IOException {
@@ -40,7 +44,21 @@ public class startingSceneController {
 
     }
     public void insertDataEvent(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("insertRaceData.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("insertRaceData.fxml"));
+        root = loader.load();
+        //apostoli username se allo scene gia tin provoli sto UI
+        InsertRaceDataController scene2Controller = loader.getController();
+        scene2Controller.displayName(username);
+
+        //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void insertDriverDataEvent(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("insertData.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

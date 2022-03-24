@@ -15,7 +15,7 @@
             <HBox alignment="CENTER" spacing="20.0">
                <children>
                   <Button fx:id="goToMainMenu" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#goToMainMenuEvent" text="log out" textAlignment="JUSTIFY" BorderPane.alignment="CENTER" />
-                  <Label fx:id="nameLabel" text="Guest" />
+                  <Label fx:id="nameLabel" />
                </children>
             </HBox>
             <Label contentDisplay="CENTER" text="Main menu scene" textAlignment="CENTER">
@@ -32,8 +32,17 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="showData" mnemonicParsing="false" onAction="#showDataEvent" prefHeight="70.0" prefWidth="70.0" text="Προβολή" wrapText="true" />
-            <Button fx:id="insertData" mnemonicParsing="false" onAction="#insertDataEvent" prefHeight="70.0" prefWidth="70.0" text="Εισαγωγή" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Button fx:id="showData" mnemonicParsing="false" onAction="#showDataEvent" prefHeight="40.0" prefWidth="160.0" text="Προβολή κατάταξης 2022" wrapText="true" />
+               </children>
+            </HBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <Button fx:id="insertData" mnemonicParsing="false" onAction="#insertDataEvent" prefHeight="40.0" prefWidth="160.0" text="Εισαγωγή αποτελέσματος" wrapText="true" />
+                  <Button fx:id="insertDriverData" mnemonicParsing="false" onAction="#insertDriverDataEvent" prefHeight="40.0" prefWidth="160.0" text="Εισαγωγή οδηγού" wrapText="true" />
+               </children>
+            </VBox>
          </children>
       </HBox>
    </center>

@@ -8,8 +8,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class main extends Application {
+    String userName;
     @Override
     public void start(Stage stage) throws IOException {
+        //fortwnei kai provali to arxiko log in scene
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("loginScene.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("log in to the application");

@@ -27,12 +27,15 @@ public class controller {
         //extract the textfiled value
         String username = usernameTField.getText();
         String password = passwordTField.getText();
+        UserHolder uh = new UserHolder();
+        uh.userName = "test";
         DBActions dba = new DBActions();
+        //ean i leitourgia epistrpsi true, tha paei sto epomeno scene, alliws tha emfanisei minima lathous
         if(dba.userLogIn(username, password)){
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("startingScene.fxml"));
             root = loader.load();
-
+            //apostoli username se allo scene gia tin provoli sto UI
             startingSceneController scene2Controller = loader.getController();
             scene2Controller.displayName(username);
 
@@ -51,6 +54,7 @@ public class controller {
     public void logoutFromMainMenu( ActionEvent event) throws IOException {
 
     }
+    //dimiourgia table stin DB me onoma test
     public void createAndPopulateTables( ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         DBActions db = new DBActions();
        // db.createTables();
@@ -60,7 +64,6 @@ public class controller {
     public void registerUser(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("registerScene.fxml"));
         root = loader.load();
-
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

@@ -3,7 +3,7 @@ package com.example.cwrk_v2;
 import java.sql.*;
 
 public class DBActions {
-
+    //SE PERIPTWSI ALLAGIS DB, prepei na allaxtoun ta parakatw stoixeia
     private static final String DB_URL = "jdbc:h2:~/test";
     private static final String User = "sa";
     private static final String Pass = "";
@@ -18,6 +18,7 @@ public class DBActions {
         //execute a query
         stmt = conn.createStatement();
     }
+    //dimiourgei ola ta tables pou xriazetai i efarmogi
     public void createTables() throws SQLException {
         String sql = "CREATE TABLE users (\n" +
                 "\tuName varchar(100) NOT NULL,\n" +
@@ -78,18 +79,21 @@ public class DBActions {
                 "ALTER TABLE races ADD CONSTRAINT races_fk17 FOREIGN KEY (p18) REFERENCES drivers(dID);\n" +
                 "ALTER TABLE races ADD CONSTRAINT races_fk18 FOREIGN KEY (p19) REFERENCES drivers(dID);\n" +
                 "ALTER TABLE races ADD CONSTRAINT races_fk19 FOREIGN KEY (p20) REFERENCES drivers(dID);";
-
+        //ektelesi tou querry
         int row= stmt.executeUpdate(sql);
     }
+    //"gemizei" ta tables me dedomena
     public void populateTables() throws SQLException {
         String sql = "insert into users (uName, uPass, isAdmin) values ('admin', '1234', 1);";
         int row= stmt.executeUpdate(sql);
 
     }
-
+    //elenxos gia log in stin vasi
     public boolean userLogIn(String username, String password) throws SQLException {
         ResultSet res = stmt.executeQuery("SELECT * FROM users");
         boolean result= false;
+        //diatrexoume olo to table users, se periptwsi pou vrethei antistoixeia metaksi tis vasis kai twn dedomenwn
+        //pou eisigage o xristiw, tha girisei true, se antitheti periptvsi false
         while (res.next()) {
             String uID = (res.getObject("uID").toString());
             String uName = (res.getObject("uName").toString());
@@ -101,12 +105,14 @@ public class DBActions {
             }
         return result;
     }
+    //eisagontai ta dedomena stin vasi mesw tou register scene
     public void userRegister (String username, String password) throws SQLException{
         String sql = "INSERT INTO users (uName, uPass, isAdmin) VALUES (?, ?, 0)";
 
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, username);
         pst.setString(2, password);
+        //ektelesi query
         pst.executeUpdate();
 
 

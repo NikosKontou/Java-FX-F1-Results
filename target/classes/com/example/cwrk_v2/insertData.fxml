@@ -8,17 +8,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cwrk_v2.startingSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cwrk_v2.InsertDataController">
    <top>
       <VBox alignment="CENTER" spacing="10.0">
          <children>
             <HBox alignment="CENTER" spacing="20.0">
                <children>
-                  <Button fx:id="goToMainMenu" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#goTOMainMenuEvent" text="back" textAlignment="JUSTIFY" BorderPane.alignment="CENTER" />
-                  <Label fx:id="nameLabel" text="username" />
+                  <Button fx:id="goToMainMenu" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#goToMainMenuEvent" text="back" textAlignment="JUSTIFY" BorderPane.alignment="CENTER" />
+                  <Label fx:id="nameLabel" />
                </children>
             </HBox>
-            <Label contentDisplay="CENTER" text="Insert data" textAlignment="CENTER">
+            <Label contentDisplay="CENTER" text="Insert driver" textAlignment="CENTER">
                <font>
                   <Font size="23.0" />
                </font>
@@ -32,22 +32,16 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="insertTrack" mnemonicParsing="false" onAction="#insertTrackEvent" text="Track" />
-            <Button fx:id="insertDriver" mnemonicParsing="false" onAction="#insertDriverEvent" text="Driver" />
-            <HBox alignment="CENTER">
+            <HBox>
                <children>
-                  <Button fx:id="insertSeason" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertSeasonEvent" text="Season" textAlignment="CENTER" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="(race results and teams)" textAlignment="JUSTIFY" textOverrun="CENTER_WORD_ELLIPSIS">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding>
-                  </Label>
+                  <Label text="Driver number" />
+                  <TextField promptText="NN" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label text="Driver name" />
+                  <TextField />
                </children>
             </HBox>
          </children>
