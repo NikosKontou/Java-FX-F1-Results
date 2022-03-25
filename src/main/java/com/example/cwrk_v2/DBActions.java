@@ -85,9 +85,35 @@ public class DBActions {
     }
     //"gemizei" ta tables me dedomena
     public void populateTables() throws SQLException {
-        String sql = "insert into users (uName, uPass, isAdmin) values ('admin', '1234', 1);";
-        int row= stmt.executeUpdate(sql);
-
+        //create admin acc
+        String sql = "insert into users (uName, uPass, isAdmin) values ('admin', ?, 1);";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, MD5.getMd5("1234"));
+        pst.executeUpdate();
+        //insert every 2022 driver
+        sql= "insert into drivers values \n" +
+                "(24, 'Guanyu Zhou'),\n" +
+                "(77, 'Valtteri Bottas'),\n" +
+                "(10, 'Pierre Gasly'),\n" +
+                "(22, 'Yuki Tsunoda'),\n" +
+                "(14, 'Fernando Alonso'),\n" +
+                "(31, 'Esteban Ocon'),\n" +
+                "(27, 'Nico Hulkenberg'),\n" +
+                "(5, 'Sebastian Vettel'),\n" +
+                "(18, 'Lance Stroll'),\n" +
+                "(16, 'Charles Leclerc'),\n" +
+                "(55, 'Carlos Sainz Jr.'),\n" +
+                "(20, 'Kevin Magnussen'),\n" +
+                "(47, 'Mick Schumacher'),\n" +
+                "(3, 'Daniel Ricciardo'),\n" +
+                "(4, 'Lando Norris'),\n" +
+                "(44, 'Lewis Hamilton'),\n" +
+                "(63, 'George Russell'),\n" +
+                "(1, 'Max Verstappen'),\n" +
+                "(11, 'Sergio Perez'),\n" +
+                "(6, 'Nicholas Latifi'),\n" +
+                "(23, 'Alexander Albon')\n";
+           int row = stmt.executeUpdate(sql);
     }
     //elenxos gia log in stin vasi
     public boolean[] userLogIn(String username, String password) throws SQLException {
@@ -101,7 +127,7 @@ public class DBActions {
             String admin = (res.getObject("isAdmin").toString());
             String uName = (res.getObject("uName").toString());
             String uPass = (res.getObject("uPass").toString());
-            if (username.equals(uName)&& password.equals(uPass)){
+            if (username.equals(uName)&& MD5.getMd5(password).equals(uPass)){
                 System.out.println("Succefully loged in "+ uName);
                 result[0]=  true;
                 if (admin=="1"){
@@ -123,13 +149,16 @@ public class DBActions {
 
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, username.trim());
-            pst.setString(2, password.trim());
+            //kriptografisi kwdikou
+            pst.setString(2, MD5.getMd5(password.trim()));
             //ektelesi query
             pst.executeUpdate();
         }
         return result;
 
     }
+
+
     //elenxos oti o kainourgios xristis den exei idio username me proiparxwn
     public boolean checkIfUniqueUser(String username) throws SQLException {
         boolean uniqueUser = true;

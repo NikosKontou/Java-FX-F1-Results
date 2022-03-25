@@ -61,8 +61,8 @@ public class controller {
     //dimiourgia table stin DB me onoma test
     public void createAndPopulateTables( ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         DBActions db = new DBActions();
-       // db.createTables();
-        //db.populateTables();
+        //db.createTables();
+        db.populateTables();
         System.out.println("tables created!");
     }
     public void registerUser(ActionEvent event) throws IOException {
