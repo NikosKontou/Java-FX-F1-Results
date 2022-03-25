@@ -10,6 +10,7 @@ public class DBActions {
     private static final String Pass = "";
     private Connection conn = null;
     private Statement stmt = null;
+
     public DBActions() throws ClassNotFoundException, SQLException {
         //fortwnw tin vivliothiki
         Class.forName("org.h2.Driver");
@@ -19,6 +20,7 @@ public class DBActions {
         //execute a query
         stmt = conn.createStatement();
     }
+
     //dimiourgei ola ta tables pou xriazetai i efarmogi
     public void createTables() throws SQLException {
         String sql = "CREATE TABLE users (\n" +
@@ -81,8 +83,9 @@ public class DBActions {
                 "ALTER TABLE races ADD CONSTRAINT races_fk18 FOREIGN KEY (p19) REFERENCES drivers(dID);\n" +
                 "ALTER TABLE races ADD CONSTRAINT races_fk19 FOREIGN KEY (p20) REFERENCES drivers(dID);";
         //ektelesi tou querry
-        int row= stmt.executeUpdate(sql);
+        int row = stmt.executeUpdate(sql);
     }
+
     //"gemizei" ta tables me dedomena
     public void populateTables() throws SQLException {
         //create admin acc
@@ -91,7 +94,7 @@ public class DBActions {
         pst.setString(1, MD5.getMd5("1234"));
         pst.executeUpdate();
         //insert every 2022 driver
-        sql= "insert into drivers values \n" +
+        sql = "insert into drivers values \n" +
                 "(24, 'Guanyu Zhou'),\n" +
                 "(77, 'Valtteri Bottas'),\n" +
                 "(10, 'Pierre Gasly'),\n" +
@@ -113,13 +116,14 @@ public class DBActions {
                 "(11, 'Sergio Perez'),\n" +
                 "(6, 'Nicholas Latifi'),\n" +
                 "(23, 'Alexander Albon')\n";
-           int row = stmt.executeUpdate(sql);
+        int row = stmt.executeUpdate(sql);
     }
+
     //elenxos gia log in stin vasi
     public boolean[] userLogIn(String username, String password) throws SQLException {
         ResultSet res = stmt.executeQuery("SELECT * FROM users");
         boolean[] result = new boolean[2];
-        result[0]= false;
+        result[0] = false;
         //diatrexoume olo to table users, se periptwsi pou vrethei antistoixeia metaksi tis vasis kai twn dedomenwn
         //pou eisigage o xristiw, tha girisei true, se antitheti periptvsi false
         while (res.next()) {
@@ -127,20 +131,21 @@ public class DBActions {
             String admin = (res.getObject("isAdmin").toString());
             String uName = (res.getObject("uName").toString());
             String uPass = (res.getObject("uPass").toString());
-            if (username.equals(uName)&& MD5.getMd5(password).equals(uPass)){
-                System.out.println("Succefully loged in "+ uName);
-                result[0]=  true;
-                if (admin=="1"){
-                    result[1]=true;
+            if (username.equals(uName) && MD5.getMd5(password).equals(uPass)) {
+                System.out.println("Succefully loged in " + uName);
+                result[0] = true;
+                if (admin == "1") {
+                    result[1] = true;
                 } else {
-                    result[1]=false;
+                    result[1] = false;
                 }
             }
-            }
+        }
         return result;
     }
+
     //eisagontai ta dedomena stin vasi mesw tou register scene
-    public boolean userRegister (String username, String password) throws SQLException{
+    public boolean userRegister(String username, String password) throws SQLException {
         //se periptwsi pou yparxei to username den tha dimiourgithei o xristis
         boolean result = checkIfUniqueUser(username);
         if (result) {
@@ -167,7 +172,7 @@ public class DBActions {
         while (res.next()) {
             String uNanme = (res.getObject("uName")).toString();
             //ean uparxei to antistoi username gyrna false
-            if(uNanme.equals(username)){
+            if (uNanme.equals(username)) {
                 uniqueUser = false;
             }
         }
@@ -175,13 +180,8 @@ public class DBActions {
     }
 
 
-
-
-
-
     public void cleanUp() throws SQLException {
 // This part might also be repeated in every method
-
 
 
 // close statements and connection
