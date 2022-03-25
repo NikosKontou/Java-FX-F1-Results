@@ -30,6 +30,20 @@
       </VBox>
    </top>
    <center>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER" />
+      <VBox>
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField fx:id="yearTF" promptText="YYYY" />
+                  <Button fx:id="sumbitQueryButton" mnemonicParsing="false" onAction="#submitQuery" text="Submit" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label fx:id="queryResult" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </center>
 </BorderPane>

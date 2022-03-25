@@ -35,89 +35,94 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
                <children>
                   <Label text="Year:" />
-                  <TextField promptText="YYYY" />
+                  <TextField fx:id="year" promptText="YYYY" />
                   <Label text="Track name:" />
-                  <TextField />
+                  <TextField fx:id="trackName" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p1" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p2" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p3" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p4" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p5" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p6" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p7" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p8" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p9" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p10" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p11" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p12" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p13" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p14" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p15" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p16" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p17" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p18" promptText="NN" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Label text="P1" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p19" promptText="NN" />
                   <Label text="P2" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="p20" promptText="NN" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Button fx:id="insertRaceDataButton" mnemonicParsing="false" onAction="#insertRaceData" text="Submit" />
                </children>
             </HBox>
          </children>

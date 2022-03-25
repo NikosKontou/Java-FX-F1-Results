@@ -25,20 +25,20 @@ public class startingSceneController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    String username;
+
     //pairnei to username kai to provalei kata tin ekinisi tou controller
     //o initialize ekteleite kathe fora stin arxi
-    public void initialize(){
+    public void initialize() {
         nameLabel.setText(UserHolder.getUserName());
-        if (UserHolder.isIsAdmin()){
+        if (UserHolder.isIsAdmin()) {
             insertData.setVisible(true);
             insertDriverData.setVisible(true);
-            priviligesLabel.setTextFill(Color.rgb(130,160,125));
+            priviligesLabel.setTextFill(Color.rgb(130, 160, 125));
             priviligesLabel.setText("Elevated priviliges");
         } else {
             insertData.setVisible(false);
             insertDriverData.setVisible(false);
-            priviligesLabel.setTextFill(Color.rgb(160,125,125));
+            priviligesLabel.setTextFill(Color.rgb(160, 125, 125));
             priviligesLabel.setText("Normal priviliges");
         }
 
@@ -46,20 +46,22 @@ public class startingSceneController {
 
     public void goToMainMenuEvent(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
 
     }
+
     public void showDataEvent(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("readData.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
 
     }
+
     public void insertDataEvent(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("insertRaceData.fxml"));
@@ -67,14 +69,15 @@ public class startingSceneController {
 
 
         //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
     public void insertDriverDataEvent(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("insertData.fxml"));
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

@@ -1,5 +1,6 @@
 package com.example.cwrk_v2;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -280,6 +281,53 @@ public class DBActions {
 // close statements and connection
         stmt.close();
         conn.close();
+    }
+    public String showRacesPerYear(int year) throws SQLException {
+        String result="";
+        ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = "+year);
+        while (res.next()) {
+      //      System.out.println("has next");
+            result += (res.getObject("TRACKNAME")).toString()+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p1")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p2")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p3")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p4")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p5")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p6")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p7")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p8")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p9")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p10")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p11")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p12")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p13")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p14")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p15")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p16")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p17")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p18")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p19")).toString()))+" ";
+            result +=findDriverName(Integer.parseInt((res.getObject("p20")).toString()))+" ";
+            result+="\n";
+        }
+      //  System.out.println(result);
+        return  result;
+    }
+
+    public String findDriverName(int dID) throws SQLException {
+        String dName="";
+        //conn.CreateStatement xriazete dioti kanw polla querries sto showRacesperYear kai emfanizei exception
+        //psaxnw ton odigo me to sigkekrimeno ID gia na emfanisei apo tin sxesiaki vasi to onoma
+        ResultSet res = conn.createStatement().executeQuery("SELECT * FROM drivers where did = "+dID);
+        while (res.next()) {
+            int driverID = Integer.parseInt(String.valueOf((res.getObject("dID"))));
+            String driverName = String.valueOf((res.getObject("dName")));
+            //ean uparxei to antisto driverName to apothikevi
+            if (dID==driverID) {
+                dName= driverName;
+            }
+        }
+        return dName;
     }
 
 
