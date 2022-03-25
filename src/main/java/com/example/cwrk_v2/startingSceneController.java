@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -14,6 +15,10 @@ import java.io.IOException;
 public class startingSceneController {
     @FXML
     Label nameLabel;
+    @FXML
+    Button insertData;
+    @FXML
+    Button insertDriverData;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -22,6 +27,15 @@ public class startingSceneController {
     //o initialize ekteleite kathe fora stin arxi
     public void initialize(){
         nameLabel.setText(UserHolder.getUserName());
+        if (UserHolder.isIsAdmin()){
+            insertData.setVisible(true);
+            insertDriverData.setVisible(true);
+        } else {
+            insertData.setVisible(false);
+            insertDriverData.setVisible(false);
+
+        }
+
     }
 
     public void goToMainMenuEvent(ActionEvent event) throws IOException {

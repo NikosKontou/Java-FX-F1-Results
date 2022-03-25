@@ -30,34 +30,35 @@ public class registerController {
     private Parent root;
 
 
-        public void goToLogIn(ActionEvent event) throws IOException{
+    public void goToLogIn(ActionEvent event) throws IOException {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("loginScene.fxml"));
-            root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("loginScene.fxml"));
+        root = loader.load();
 
-            //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+        //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
-    public void registerUser (ActionEvent event) throws SQLException, ClassNotFoundException {
+
+    public void registerUser(ActionEvent event) throws SQLException, ClassNotFoundException {
         //extract the textfiled value
         String username = usernameTField.getText();
         String password = passwordTField.getText();
         DBActions dba = new DBActions();
         String confirmPassword = confirmPasswordTField.getText();
-        if (password.equals(confirmPassword)){
-            if(dba.userRegister(username, password)){
-                messageLabel.setTextFill(Color.rgb(30,250,80));
+        if (password.equals(confirmPassword)) {
+            if (dba.userRegister(username, password)) {
+                messageLabel.setTextFill(Color.rgb(30, 250, 80));
                 messageLabel.setText("New user was created");
 
-            }else {
-                messageLabel.setTextFill(Color.rgb(250,80,30));
+            } else {
+                messageLabel.setTextFill(Color.rgb(250, 80, 30));
                 messageLabel.setText("username must be unique");
             }
-        }else   {
-            messageLabel.setTextFill(Color.rgb(250,80,30));
+        } else {
+            messageLabel.setTextFill(Color.rgb(250, 80, 30));
             messageLabel.setText("Passwords do not match, try again");
         }
 

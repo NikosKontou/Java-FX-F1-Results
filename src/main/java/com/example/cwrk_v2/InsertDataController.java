@@ -6,20 +6,44 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class InsertDataController {
     @FXML
     Label nameLabel;
+    @FXML
+    TextField driverNumberTF;
+    @FXML
+    TextField driverNameTF;
+    @FXML
+    Button insertDriverButton;
+    @FXML
+    Label feedbackLabel;
+
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     public void initialize(){
         nameLabel.setText(UserHolder.getUserName());
+    }
+
+    public void insertDriver(ActionEvent event) throws SQLException, ClassNotFoundException {
+        DBActions dba = new DBActions();
+        if(dba.insertDriver(Integer.parseInt(driverNumberTF.getText()), driverNameTF.getText())){
+            feedbackLabel.setTextFill(Color.rgb(30,250,80));
+            feedbackLabel.setText("New Driver was successfully created");
+        }else   {
+            feedbackLabel.setTextFill(Color.rgb(250,80,30));
+            feedbackLabel.setText("a Driver with this number already exists");
+        }
     }
 
     //to back button fortwnei diaforetiko scene sto stage

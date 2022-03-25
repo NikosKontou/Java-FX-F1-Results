@@ -128,13 +128,13 @@ public class DBActions {
         //pou eisigage o xristiw, tha girisei true, se antitheti periptvsi false
         while (res.next()) {
             String uID = (res.getObject("uID").toString());
-            String admin = (res.getObject("isAdmin").toString());
+            int admin = Integer.parseInt(res.getObject("isAdmin").toString());
             String uName = (res.getObject("uName").toString());
             String uPass = (res.getObject("uPass").toString());
             if (username.equals(uName) && MD5.getMd5(password).equals(uPass)) {
                 System.out.println("Succefully loged in " + uName);
                 result[0] = true;
-                if (admin == "1") {
+                if (admin == 1) {
                     result[1] = true;
                 } else {
                     result[1] = false;
@@ -164,6 +164,25 @@ public class DBActions {
     }
 
 
+    public boolean insertDriver(int driverID, String driverName) throws SQLException {
+        //se periptwsi pou yparxei to dID den dimiourgeite o odigos
+        //apo to 2014 kai epeita o odigos exei monadiko gia thn f1 anagnwristiko (enas arithmos apo to 0 mexri to 99)
+        boolean result = checkIfDriverExists(driverID);
+        if (result) {
+            // to ?, ?, 0 simenei oti oloi oi users mesw tou register from den tha exoun admin priviliges
+            String sql = "INSERT INTO drivers (dID, dName) VALUES (?, ?)";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, driverID);
+            pst.setString(2, driverName);
+            //ektelesi query
+            pst.executeUpdate();
+        }
+        return result;
+
+    }
+
+
     //elenxos oti o kainourgios xristis den exei idio username me proiparxwn
     public boolean checkIfUniqueUser(String username) throws SQLException {
         boolean uniqueUser = true;
@@ -177,6 +196,21 @@ public class DBActions {
             }
         }
         return uniqueUser;
+    }
+
+    //elenxos oti o kainourgios xristis den exei idio username me proiparxwn
+    public boolean checkIfDriverExists(int driverID) throws SQLException {
+        boolean doesNotExist = true;
+        //pairnei ola to username apo tin ontotita stin vasi
+        ResultSet res = stmt.executeQuery("SELECT * FROM drivers");
+        while (res.next()) {
+            int dID = Integer.parseInt(String.valueOf((res.getObject("dID"))));
+            //ean uparxei to antistoi username gyrna false
+            if (dID==driverID) {
+                doesNotExist = false;
+            }
+        }
+        return doesNotExist;
     }
 
 

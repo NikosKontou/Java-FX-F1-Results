@@ -32,18 +32,20 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="feedbackLabel" />
             <HBox>
                <children>
                   <Label text="Driver number" />
-                  <TextField promptText="NN" />
+                  <TextField fx:id="driverNumberTF" promptText="00-99" />
                </children>
             </HBox>
             <HBox>
                <children>
                   <Label text="Driver name" />
-                  <TextField />
+                  <TextField fx:id="driverNameTF" />
                </children>
             </HBox>
+            <Button fx:id="insertDriverButton" mnemonicParsing="false" onAction="#insertDriver" text="Submit" />
          </children>
       </VBox>
    </center>
