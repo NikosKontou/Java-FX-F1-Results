@@ -62,6 +62,7 @@ public class DBActions {
                 "\tp20 INT NOT NULL\n" +
                 ");\n" +
                 "\n" +
+                "alter table races add constraint uq_races UNIQUE(date, trackname);\n"+
                 "ALTER TABLE races ADD CONSTRAINT races_fk0 FOREIGN KEY (p1) REFERENCES drivers(dID);\n" +
                 "ALTER TABLE races ADD CONSTRAINT races_fk1 FOREIGN KEY (p2) REFERENCES drivers(dID);\n" +
                 "ALTER TABLE races ADD CONSTRAINT races_fk2 FOREIGN KEY (p3) REFERENCES drivers(dID);\n" +
@@ -149,7 +150,7 @@ public class DBActions {
         //se periptwsi pou yparxei to username den tha dimiourgithei o xristis
         boolean result = checkIfUniqueUser(username);
         if (result) {
-            // to ?, ?, 0 simenei oti oloi oi users mesw tou register from den tha exoun admin priviliges
+            // to ?, ?, 0 simenei oti oloi oi users mesw tou register form den tha exoun admin priviliges
             String sql = "INSERT INTO users (uName, uPass, isAdmin) VALUES (?, ?, 0)";
 
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -182,6 +183,47 @@ public class DBActions {
 
     }
 
+    public boolean insertRace(String trackName, int year, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, int p12, int p13, int p14, int p15, int p16, int p17, int p18, int p19, int p20) throws SQLException {
+        //se periptwsi pou o sindiasmos event kai xronias iparxei, den tha dimiourgeite i engrafi
+        //vasi kanonismwn Formula One Managment, den mporei na dieksaxthoun 2 agwnes stin idia pista xwris diaforetiko onoma
+        //p.x. to 2020 gia na ginoun 2 agwnes stin idia pista o enas onomastike "FORMULA 1 ROLEX GROSSER PREIS VON ÖSTERREICH 2020" kai o allos "FORMULA 1 PIRELLI GROSSER PREIS DER STEIERMARK 2020"
+        //EXEI MPEI CONSTRAINT KAI STIN VASI!!!!
+        boolean result = checkIfRaceExists(year, trackName);
+        if (result) {
+            // to ?, ?, 0 simenei oti oloi oi users mesw tou register from den tha exoun admin priviliges
+            String sql = "INSERT INTO \"RACES\"(\"TRACKNAME\",\"DATE\",\"P1\",\"P2\",\"P3\",\"P4\",\"P5\",\"P6\",\"P7\",\"P8\",\"P9\",\"P10\"," +
+                    "\"P11\",\"P12\",\"P13\",\"P14\",\"P15\",\"P16\",\"P17\",\"P18\",\"P19\",\"P20\")" +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, trackName);
+            pst.setInt(2, year);
+            pst.setInt(3, p1);
+            pst.setInt(4, p2);
+            pst.setInt(5, p3);
+            pst.setInt(6, p4);
+            pst.setInt(7, p5);
+            pst.setInt(8, p6);
+            pst.setInt(9, p7);
+            pst.setInt(10, p8);
+            pst.setInt(11, p9);
+            pst.setInt(12, p10);
+            pst.setInt(13, p11);
+            pst.setInt(14, p12);
+            pst.setInt(15, p13);
+            pst.setInt(16, p14);
+            pst.setInt(17, p15);
+            pst.setInt(18, p16);
+            pst.setInt(19, p17);
+            pst.setInt(20, p18);
+            pst.setInt(21, p19);
+            pst.setInt(22, p20);
+            //ektelesi query
+            pst.executeUpdate();
+        }
+        return result;
+
+    }
+
 
     //elenxos oti o kainourgios xristis den exei idio username me proiparxwn
     public boolean checkIfUniqueUser(String username) throws SQLException {
@@ -193,6 +235,23 @@ public class DBActions {
             //ean uparxei to antistoi username gyrna false
             if (uNanme.equals(username)) {
                 uniqueUser = false;
+            }
+        }
+        return uniqueUser;
+    }
+    //elenxos monadikotitas agwna prin apostalei stin vasi
+    public boolean checkIfRaceExists(int year,String trackName) throws SQLException {
+        boolean uniqueUser = true;
+        //pairnei ola to username apo tin ontotita stin vasi
+        ResultSet res = stmt.executeQuery("SELECT * FROM races");
+        while (res.next()) {
+            String tname = (res.getObject("TRACKNAME")).toString();
+            int date = Integer.parseInt((res.getObject("date")).toString());
+            //ean uparxei to antistoi username gyrna false
+            if (tname.equals(trackName)) {
+                if (date==year) {
+                    uniqueUser = false;
+                }
             }
         }
         return uniqueUser;

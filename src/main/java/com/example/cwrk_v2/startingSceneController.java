@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,6 +20,8 @@ public class startingSceneController {
     Button insertData;
     @FXML
     Button insertDriverData;
+    @FXML
+    Label priviligesLabel;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -30,10 +33,13 @@ public class startingSceneController {
         if (UserHolder.isIsAdmin()){
             insertData.setVisible(true);
             insertDriverData.setVisible(true);
+            priviligesLabel.setTextFill(Color.rgb(130,160,125));
+            priviligesLabel.setText("Elevated priviliges");
         } else {
             insertData.setVisible(false);
             insertDriverData.setVisible(false);
-
+            priviligesLabel.setTextFill(Color.rgb(160,125,125));
+            priviligesLabel.setText("Normal priviliges");
         }
 
     }

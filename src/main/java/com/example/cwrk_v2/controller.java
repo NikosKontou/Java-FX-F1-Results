@@ -40,7 +40,6 @@ public class controller {
             //elenxos kai apothikeusi ean o xristis exei elevated privileges
             if (res[1]) {
                 UserHolder.setIsAdmin(true);
-                System.out.println("set as admin "+UserHolder.isIsAdmin());
                 //alliws afairese ta dikaiwmata
             } else  {
                 UserHolder.setIsAdmin(false);
@@ -67,7 +66,7 @@ public class controller {
     //dimiourgia table stin DB me onoma test
     public void createAndPopulateTables(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         DBActions db = new DBActions();
-        //db.createTables();
+        db.createTables();
         db.populateTables();
         System.out.println("tables created!");
     }
