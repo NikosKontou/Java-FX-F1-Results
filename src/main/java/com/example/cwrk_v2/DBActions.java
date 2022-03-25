@@ -1,6 +1,7 @@
 package com.example.cwrk_v2;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBActions {
     //SE PERIPTWSI ALLAGIS DB, prepei na allaxtoun ta parakatw stoixeia
@@ -89,35 +90,60 @@ public class DBActions {
 
     }
     //elenxos gia log in stin vasi
-    public boolean userLogIn(String username, String password) throws SQLException {
+    public boolean[] userLogIn(String username, String password) throws SQLException {
         ResultSet res = stmt.executeQuery("SELECT * FROM users");
-        boolean result= false;
+        boolean[] result = new boolean[2];
+        result[0]= false;
         //diatrexoume olo to table users, se periptwsi pou vrethei antistoixeia metaksi tis vasis kai twn dedomenwn
         //pou eisigage o xristiw, tha girisei true, se antitheti periptvsi false
         while (res.next()) {
             String uID = (res.getObject("uID").toString());
+            String admin = (res.getObject("isAdmin").toString());
             String uName = (res.getObject("uName").toString());
             String uPass = (res.getObject("uPass").toString());
             if (username.equals(uName)&& password.equals(uPass)){
                 System.out.println("Succefully loged in "+ uName);
-                result=  true;
+                result[0]=  true;
+                if (admin=="1"){
+                    result[1]=true;
+                } else {
+                    result[1]=false;
+                }
             }
             }
         return result;
     }
     //eisagontai ta dedomena stin vasi mesw tou register scene
-    public void userRegister (String username, String password) throws SQLException{
-        String sql = "INSERT INTO users (uName, uPass, isAdmin) VALUES (?, ?, 0)";
+    public boolean userRegister (String username, String password) throws SQLException{
+        //se periptwsi pou yparxei to username den tha dimiourgithei o xristis
+        boolean result = checkIfUniqueUser(username);
+        if (result) {
+            // to ?, ?, 0 simenei oti oloi oi users mesw tou register from den tha exoun admin priviliges
+            String sql = "INSERT INTO users (uName, uPass, isAdmin) VALUES (?, ?, 0)";
 
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, username);
-        pst.setString(2, password);
-        //ektelesi query
-        pst.executeUpdate();
-
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, username.trim());
+            pst.setString(2, password.trim());
+            //ektelesi query
+            pst.executeUpdate();
+        }
+        return result;
 
     }
-
+    //elenxos oti o kainourgios xristis den exei idio username me proiparxwn
+    public boolean checkIfUniqueUser(String username) throws SQLException {
+        boolean uniqueUser = true;
+        //pairnei ola to username apo tin ontotita stin vasi
+        ResultSet res = stmt.executeQuery("SELECT * FROM users");
+        while (res.next()) {
+            String uNanme = (res.getObject("uName")).toString();
+            //ean uparxei to antistoi username gyrna false
+            if(uNanme.equals(username)){
+                uniqueUser = false;
+            }
+        }
+        return uniqueUser;
+    }
 
 
 

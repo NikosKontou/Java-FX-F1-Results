@@ -19,13 +19,9 @@ public class InsertRaceDataController {
     private Scene scene;
     private Parent root;
 
-    //pairnei to username kai to provalei
-    public void displayName (String username){
-        if (!username.isEmpty()) {
-            nameLabel.setText(username);
-        }
+    public void initialize(){
+        nameLabel.setText(UserHolder.getUserName());
     }
-
 
     //to back button fortwnei diaforetiko scene sto stage
     public void goToInsertMenuEvent (ActionEvent event) throws IOException {

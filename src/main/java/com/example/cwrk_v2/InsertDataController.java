@@ -18,7 +18,9 @@ public class InsertDataController {
     private Scene scene;
     private Parent root;
 
-
+    public void initialize(){
+        nameLabel.setText(UserHolder.getUserName());
+    }
 
     //to back button fortwnei diaforetiko scene sto stage
     public void goToMainMenuEvent (ActionEvent event) throws IOException {

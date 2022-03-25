@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,7 +20,8 @@ public class controller {
      TextField usernameTField;
     @FXML
     TextField passwordTField;
-
+    @FXML
+    Label warningLogIn;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -27,25 +30,26 @@ public class controller {
         //extract the textfiled value
         String username = usernameTField.getText();
         String password = passwordTField.getText();
-        UserHolder uh = new UserHolder();
-        uh.userName = "test";
+
         DBActions dba = new DBActions();
         //ean i leitourgia epistrpsi true, tha paei sto epomeno scene, alliws tha emfanisei minima lathous
-        if(dba.userLogIn(username, password)){
+        boolean[] res;
+        res =dba.userLogIn(username, password);
+        if(res[0]){
+            UserHolder.setUserName(username);
+            if (res[1]){
+                UserHolder.setIsAdmin(true);
+            }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("startingScene.fxml"));
             root = loader.load();
-            //apostoli username se allo scene gia tin provoli sto UI
-            startingSceneController scene2Controller = loader.getController();
-            scene2Controller.displayName(username);
-
-            //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        } else  {
-            System.out.println("failed to log in");
+        } else {
+            warningLogIn.setTextFill(Color.rgb(250,80,30));
+            warningLogIn.setText("You typed wrong credentials, try again or sign up");
         }
 
 

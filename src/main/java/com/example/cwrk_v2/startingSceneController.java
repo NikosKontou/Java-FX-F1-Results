@@ -18,15 +18,12 @@ public class startingSceneController {
     private Scene scene;
     private Parent root;
     String username;
-    //pairnei to username kai to provalei
-    public void displayName (String username){
-        UserHolder uh = null;
-        //petaei exception otan einai null apo ta alla scenes pou den exoun ayti thn leitoyrgia akoma
-        if (!username.isEmpty()) {
-            nameLabel.setText(uh.userName);
-            this.username= uh.userName;
-        }
+    //pairnei to username kai to provalei kata tin ekinisi tou controller
+    //o initialize ekteleite kathe fora stin arxi
+    public void initialize(){
+        nameLabel.setText(UserHolder.getUserName());
     }
+
     public void goToMainMenuEvent(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("loginScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -47,9 +44,7 @@ public class startingSceneController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("insertRaceData.fxml"));
         root = loader.load();
-        //apostoli username se allo scene gia tin provoli sto UI
-        InsertRaceDataController scene2Controller = loader.getController();
-        scene2Controller.displayName(username);
+
 
         //  root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

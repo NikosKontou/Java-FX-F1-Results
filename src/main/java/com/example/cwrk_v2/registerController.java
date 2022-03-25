@@ -48,9 +48,14 @@ public class registerController {
         DBActions dba = new DBActions();
         String confirmPassword = confirmPasswordTField.getText();
         if (password.equals(confirmPassword)){
-            dba.userRegister(username, password);
-            messageLabel.setTextFill(Color.rgb(30,250,80));
-            messageLabel.setText("Passwords match and user was created");
+            if(dba.userRegister(username, password)){
+                messageLabel.setTextFill(Color.rgb(30,250,80));
+                messageLabel.setText("New user was created");
+
+            }else {
+                messageLabel.setTextFill(Color.rgb(250,80,30));
+                messageLabel.setText("username must be unique");
+            }
         }else   {
             messageLabel.setTextFill(Color.rgb(250,80,30));
             messageLabel.setText("Passwords do not match, try again");
