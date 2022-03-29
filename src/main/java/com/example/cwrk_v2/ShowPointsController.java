@@ -19,7 +19,7 @@ public class ShowPointsController {
     private Scene scene;
     private Parent root;
     @FXML
-    Label queryResult;
+    Label queryResult, queryResultPoints;
     @FXML
     Button submitQuery;
 
@@ -36,8 +36,12 @@ public class ShowPointsController {
         DBActions dba = new DBActions();
         try {
             //provoli olwn ton apotelesmatwn enos sigkekrimenou etous
-            System.out.println(dba.showDriversPerYear(2021));
-           // queryResult.setText(dba.showDriversPerYear(2021).toString());
+            String [] result= new String[2];
+            //save the function result in order to run it only once
+            result=dba.showDriversPerYear(2021);
+
+           queryResult.setText(result[0]);
+           queryResultPoints.setText(result[1]);
         }catch (NullPointerException e){
             System.out.println("Null pointer exception at submitquery event \n"+e);
         }

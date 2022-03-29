@@ -3,9 +3,7 @@ package com.example.cwrk_v2;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 
 public class DBActions {
     //SE PERIPTWSI ALLAGIS DB, prepei na allaxtoun ta parakatw stoixeia
@@ -256,44 +254,87 @@ public class DBActions {
         String[] result = new String[2];
         result[0] = "";
         result[1] = "";
-        HashMap<Integer, Integer> HMResult = new HashMap<>();
-
-        //show every race of a specific year sorted by the order they were done
-        ResultSet res =stmt.executeQuery("SELECT * FROM RACES where date = 2021");
-        Integer[] driverIDs=parseDrivers();
-        while (res.next()) {
-            for (Integer i: driverIDs){
-                System.out.println("entered for, 'i' is: "+i);
-                //isws na mpei ena case/switch na dinei pontous ana did sto HMap
-                if(i==Integer.parseInt((res.getObject("p1")).toString())){
-                    System.out.println(i);
-                }
-            }
+        Map<Integer, Integer> HMResult = new TreeMap<Integer,Integer>();
+        Integer[] driverIDs = parseDrivers();
+        //start every driver with 0 points
+        for (int i = 0; i < 21; i++) {
+            HMResult.put(driverIDs[i], 0);
         }
-     //   for (int y : HMResult.keySet()) {
-   //         result[0] += y + "\n";
-   //     }
+        //show every race of a specific year sorted by the order they were done
+        ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = 2021 order by round");
+        while (res.next()) {
+            //parse the query result
+            for (Map.Entry<Integer, Integer> set : HMResult.entrySet()) {
+                //depending on the finishing position. award the proper points
+                if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p1")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 25);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p2")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 18);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p3")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 15);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p4")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 12);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p5")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 10);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p6")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 8);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p7")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 6);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p8")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 4);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p9")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 2);
+                } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p10")).toString())) {
+                    HMResult.put(set.getKey(), set.getValue() + 1);
+                }
+        }
 
+        }
+        // Printing all elements of the sorted Map
+        System.out.println(entriesSortedByValues(HMResult));
+        // but save to result the unsorted tables
+        for (Map.Entry<Integer, Integer> set :
+                 HMResult.entrySet()) {
+                //convert the driver number in his real name
+                result[0]+= findDriverName(set.getKey())+"\n";
+                result[1]+=set.getValue()+"\n";
+        }
         return result;
     }
 
     public Integer[] parseDrivers() throws SQLException {
         Integer[] results = new Integer[30];
         ResultSet res = conn.createStatement().executeQuery("SELECT * FROM drivers order by did");
-        int i=0;
+        int i = 0;
         while (res.next()) {
-            //pairnei mono tin proti seira...
-                results[i] = (Integer.parseInt((res.getObject("DID")).toString()));
-            //    System.out.println(Integer.parseInt((res.getObject("DID")).toString()));
+            results[i] = (Integer.parseInt((res.getObject("DID")).toString()));
             i++;
         }
         return results;
 
     }
+
     public void cleanUp() throws SQLException {
 // This part might also be repeated in every method
 // close statements and connection
         stmt.close();
         conn.close();
+    }
+
+
+    //sort any map by value
+    static <K,V extends Comparable<? super V>>
+    SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+                new Comparator<Map.Entry<K,V>>() {
+                    //sort by descending value order
+                    @Override public int compare(Map.Entry<K,V> e2, Map.Entry<K,V> e1) {
+                        int res = e1.getValue().compareTo(e2.getValue());
+                        return res != 0 ? res : 1;
+                    }
+                }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
     }
 }

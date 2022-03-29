@@ -13,7 +13,12 @@
    <center>
       <VBox alignment="CENTER">
          <children>
-            <Label BorderPane.alignment="CENTER" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Label fx:id="queryResult" BorderPane.alignment="CENTER" />
+                  <Label fx:id="queryResultPoints" />
+               </children>
+            </HBox>
             <Button fx:id="submitQuery" mnemonicParsing="false" onAction="#submitQueryEvent" text="Button" />
          </children>
       </VBox>
