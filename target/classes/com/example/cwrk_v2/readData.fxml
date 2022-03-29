@@ -40,6 +40,7 @@
             </HBox>
             <HBox alignment="CENTER">
                <children>
+                  <Label fx:id="queryResultTrackName" />
                   <Label fx:id="queryResult" />
                </children>
             </HBox>

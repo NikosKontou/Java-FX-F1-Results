@@ -1,10 +1,9 @@
 package com.example.cwrk_v2;
 
-import javax.xml.transform.Result;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.Locale;
 
 public class DBActions {
     //SE PERIPTWSI ALLAGIS DB, prepei na allaxtoun ta parakatw stoixeia
@@ -117,39 +116,40 @@ public class DBActions {
 
     }
 
-    public boolean insertRace(String trackName, int year, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, int p12, int p13, int p14, int p15, int p16, int p17, int p18, int p19, int p20) throws SQLException {
+    public boolean insertRace(String trackName, int year, int round, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, int p12, int p13, int p14, int p15, int p16, int p17, int p18, int p19, int p20) throws SQLException {
         //se periptwsi pou o sindiasmos event kai xronias iparxei, den tha dimiourgeite i engrafi
         //vasi kanonismwn Formula One Managment, den mporei na dieksaxthoun 2 agwnes stin idia pista xwris diaforetiko onoma
         //p.x. to 2020 gia na ginoun 2 agwnes stin idia pista o enas onomastike "FORMULA 1 ROLEX GROSSER PREIS VON ÖSTERREICH 2020" kai o allos "FORMULA 1 PIRELLI GROSSER PREIS DER STEIERMARK 2020"
         //EXEI MPEI CONSTRAINT KAI STIN VASI!!!!
         boolean result = checkIfRaceExists(year, trackName);
         if (result) {
-            String sql = "INSERT INTO \"RACES\"(\"TRACKNAME\",\"DATE\",\"P1\",\"P2\",\"P3\",\"P4\",\"P5\",\"P6\",\"P7\",\"P8\",\"P9\",\"P10\"," +
+            String sql = "INSERT INTO \"RACES\"(\"TRACKNAME\",\"DATE\",\"ROUND\",\"P1\",\"P2\",\"P3\",\"P4\",\"P5\",\"P6\",\"P7\",\"P8\",\"P9\",\"P10\"," +
                     "\"P11\",\"P12\",\"P13\",\"P14\",\"P15\",\"P16\",\"P17\",\"P18\",\"P19\",\"P20\")" +
-                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, trackName);
             pst.setInt(2, year);
-            pst.setInt(3, p1);
-            pst.setInt(4, p2);
-            pst.setInt(5, p3);
-            pst.setInt(6, p4);
-            pst.setInt(7, p5);
-            pst.setInt(8, p6);
-            pst.setInt(9, p7);
-            pst.setInt(10, p8);
-            pst.setInt(11, p9);
-            pst.setInt(12, p10);
-            pst.setInt(13, p11);
-            pst.setInt(14, p12);
-            pst.setInt(15, p13);
-            pst.setInt(16, p14);
-            pst.setInt(17, p15);
-            pst.setInt(18, p16);
-            pst.setInt(19, p17);
-            pst.setInt(20, p18);
-            pst.setInt(21, p19);
-            pst.setInt(22, p20);
+            pst.setInt(3, round);
+            pst.setInt(4, p1);
+            pst.setInt(5, p2);
+            pst.setInt(6, p3);
+            pst.setInt(7, p4);
+            pst.setInt(8, p5);
+            pst.setInt(9, p6);
+            pst.setInt(10, p7);
+            pst.setInt(11, p8);
+            pst.setInt(12, p9);
+            pst.setInt(13, p10);
+            pst.setInt(14, p11);
+            pst.setInt(15, p12);
+            pst.setInt(16, p13);
+            pst.setInt(17, p14);
+            pst.setInt(18, p15);
+            pst.setInt(19, p16);
+            pst.setInt(20, p17);
+            pst.setInt(21, p18);
+            pst.setInt(22, p19);
+            pst.setInt(23, p20);
             //ektelesi query
             pst.executeUpdate();
         }
@@ -214,33 +214,41 @@ public class DBActions {
         stmt.close();
         conn.close();
     }
-    public String showRacesPerYear(int year) throws SQLException {
-        String result="";
-        ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = "+year);
+    public String[] showRacesPerYear(int year) throws SQLException {
+        String[] result = new String[2];
+        result[0]="";
+        result[1]="";
+        //show every race of a specific year sorted by the order they were done
+        ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = "+year+" order by round");
         while (res.next()) {
       //      System.out.println("has next");
-            result += (res.getObject("TRACKNAME")).toString()+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p1")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p2")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p3")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p4")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p5")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p6")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p7")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p8")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p9")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p10")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p11")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p12")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p13")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p14")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p15")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p16")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p17")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p18")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p19")).toString()))+" ";
-            result +=findDriverName(Integer.parseInt((res.getObject("p20")).toString()))+" ";
-            result+="\n";
+            String trackName= (res.getObject("TRACKNAME")).toString();
+            while   (trackName.length()<27){
+                trackName+= " ";
+            }
+            result[0] += trackName+ "\t\t";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p1")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p2")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p3")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p4")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p5")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p6")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p7")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p8")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p9")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p10")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p11")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p12")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p13")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p14")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p15")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p16")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p17")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p18")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p19")).toString()))+" ";
+            result[1] +=findDriverName(Integer.parseInt((res.getObject("p20")).toString()))+" ";
+            result[0]+="\n";
+            result[1]+="\n";
         }
       //  System.out.println(result);
         return  result;
@@ -256,7 +264,9 @@ public class DBActions {
             String driverName = String.valueOf((res.getObject("dName")));
             //ean uparxei to antisto driverName to apothikevi
             if (dID==driverID) {
-                dName= driverName;
+                //gia na girisei mono ta 3 prwta gramma tou epithetou se UPPERcase
+                //p.x. o Charles Leclerc tha ginei LEC
+                dName= driverName.substring(driverName.indexOf(" ")+1).substring(0, 3).toUpperCase(Locale.ROOT);
             }
         }
         return dName;

@@ -12,24 +12,24 @@
     <center>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                     <children>
                         <Label text="username" />
                         <TextField fx:id="usernameTField" />
                     </children>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                     <children>
                         <Label text="password" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" />
-                        <TextField fx:id="passwordTField" />
+                  <PasswordField fx:id="passwordTField" />
                     </children>
                 </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Label text="Confirm password" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" />
-                  <TextField fx:id="confirmPasswordTField" />
+                  <PasswordField fx:id="confirmPasswordTField" />
                </children>
             </HBox>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -40,6 +40,12 @@
                     </children>
                 </HBox>
             </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets right="200.0" />
+         </BorderPane.margin>
         </VBox>
     </center>
    <top>

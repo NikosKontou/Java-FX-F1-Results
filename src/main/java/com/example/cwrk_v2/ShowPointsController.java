@@ -11,9 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
-public class ReadDataController {
+public class ShowPointsController {
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -30,15 +29,5 @@ public class ReadDataController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-    public void submitQuery(ActionEvent event) throws SQLException, ClassNotFoundException {
-        DBActions dba = new DBActions();
-        try {
-            //provoli olwn ton apotelesmatwn enos sigkekrimenou etous
-            queryResultTrackName.setText(dba.showRacesPerYear(Integer.parseInt(yearTF.getText().toString()))[0]);
-            queryResult.setText(dba.showRacesPerYear(Integer.parseInt(yearTF.getText().toString()))[1]);
-        }catch (NullPointerException e){
-            System.out.println(e);
-        }
     }
 }

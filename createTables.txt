@@ -1,0 +1,63 @@
+CREATE TABLE users (
+                uName varchar(100) NOT NULL,
+                uPass varchar(100) NOT NULL,
+                uID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                isAdmin INT NOT NULL
+                );
+                
+                CREATE TABLE drivers (
+                dID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                dName varchar(255) NOT NULL
+                
+                );
+                
+                CREATE TABLE races (
+                rID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                trackName varchar(255) NOT NULL,
+                date INT NOT NULL,
+		round INT NOT NULL,
+                p1 INT NOT NULL,
+                p2 INT NOT NULL,
+                p3 INT NOT NULL,
+                p4 INT NOT NULL,
+                p5 INT NOT NULL,
+                p6 INT NOT NULL,
+                p7 INT NOT NULL,
+                p8 INT NOT NULL,
+                p9 INT NOT NULL,
+                p10 INT NOT NULL,
+                p11 INT NOT NULL,
+                p12 INT NOT NULL,
+                p13 INT NOT NULL,
+                p14 INT NOT NULL,
+                p15 INT NOT NULL,
+                p16 INT NOT NULL,
+                p17 INT NOT NULL,
+                p18 INT NOT NULL,
+                p19 INT NOT NULL,
+                p20 INT NOT NULL
+                );
+                
+                alter table races add constraint uq_races UNIQUE(date, trackname);
+		alter table races add constraint uq_rounds UNIQUE(date, round);
+		alter table users add constraint uq_uName UNIQUE(uName);
+                ALTER TABLE races ADD CONSTRAINT races_fk0 FOREIGN KEY (p1) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk1 FOREIGN KEY (p2) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk2 FOREIGN KEY (p3) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk3 FOREIGN KEY (p4) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk4 FOREIGN KEY (p5) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk5 FOREIGN KEY (p6) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk6 FOREIGN KEY (p7) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk7 FOREIGN KEY (p8) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk8 FOREIGN KEY (p9) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk9 FOREIGN KEY (p10) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk10 FOREIGN KEY (p11) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk11 FOREIGN KEY (p12) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk12 FOREIGN KEY (p13) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk13 FOREIGN KEY (p14) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk14 FOREIGN KEY (p15) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk15 FOREIGN KEY (p16) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk16 FOREIGN KEY (p17) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk17 FOREIGN KEY (p18) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk18 FOREIGN KEY (p19) REFERENCES drivers(dID);
+                ALTER TABLE races ADD CONSTRAINT races_fk19 FOREIGN KEY (p20) REFERENCES drivers(dID);
