@@ -10,4 +10,12 @@
    <top>
       <Button fx:id="goToMainMenu" mnemonicParsing="false" onAction="#goToMainMenuEvent" text="Back" BorderPane.alignment="CENTER" />
    </top>
+   <center>
+      <VBox alignment="CENTER">
+         <children>
+            <Label BorderPane.alignment="CENTER" />
+            <Button fx:id="submitQuery" mnemonicParsing="false" onAction="#submitQueryEvent" text="Button" />
+         </children>
+      </VBox>
+   </center>
 </BorderPane>

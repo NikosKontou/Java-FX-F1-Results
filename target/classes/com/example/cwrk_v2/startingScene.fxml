@@ -33,11 +33,12 @@
    <center>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER">
+            <VBox alignment="CENTER">
                <children>
-                  <Button fx:id="showData" mnemonicParsing="false" onAction="#showDataEvent" prefHeight="40.0" prefWidth="160.0" text="Προβολή κατάταξης 2022" wrapText="true" />
+                  <Button fx:id="showData" mnemonicParsing="false" onAction="#showDataEvent" prefHeight="40.0" prefWidth="160.0" text="Προβολή αποτελεσματων" wrapText="true" />
+                  <Button fx:id="showPoints" mnemonicParsing="false" onAction="#showPointsEvent" prefHeight="40.0" prefWidth="160.0" text="Προβολή πόντων" wrapText="true" />
                </children>
-            </HBox>
+            </VBox>
             <VBox alignment="CENTER">
                <children>
                   <Button fx:id="insertData" mnemonicParsing="false" onAction="#insertDataEvent" prefHeight="40.0" prefWidth="160.0" text="Εισαγωγή αποτελέσματος" wrapText="true" />
