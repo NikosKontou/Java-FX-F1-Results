@@ -1,6 +1,8 @@
 package com.example.cwrk_v2;
 
 import javax.xml.transform.Result;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -23,102 +25,33 @@ public class DBActions {
     }
 
     //dimiourgei ola ta tables pou xriazetai i efarmogi
-    public void createTables() throws SQLException {
-        String sql = "CREATE TABLE users (\n" +
-                "\tuName varchar(100) NOT NULL,\n" +
-                "\tuPass varchar(100) NOT NULL,\n" +
-                "\tuID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
-                "\tisAdmin INT NOT NULL\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE drivers (\n" +
-                "\tdID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,\n" +
-                "\tdName varchar(255) NOT NULL\n" +
-                "\n" +
-                ");\n" +
-                "\n" +
-                "CREATE TABLE races (\n" +
-                "\trID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
-                "\ttrackName varchar(255) NOT NULL,\n" +
-                "\tdate INT NOT NULL,\n" +
-                "\tp1 INT NOT NULL,\n" +
-                "\tp2 INT NOT NULL,\n" +
-                "\tp3 INT NOT NULL,\n" +
-                "\tp4 INT NOT NULL,\n" +
-                "\tp5 INT NOT NULL,\n" +
-                "\tp6 INT NOT NULL,\n" +
-                "\tp7 INT NOT NULL,\n" +
-                "\tp8 INT NOT NULL,\n" +
-                "\tp9 INT NOT NULL,\n" +
-                "\tp10 INT NOT NULL,\n" +
-                "\tp11 INT NOT NULL,\n" +
-                "\tp12 INT NOT NULL,\n" +
-                "\tp13 INT NOT NULL,\n" +
-                "\tp14 INT NOT NULL,\n" +
-                "\tp15 INT NOT NULL,\n" +
-                "\tp16 INT NOT NULL,\n" +
-                "\tp17 INT NOT NULL,\n" +
-                "\tp18 INT NOT NULL,\n" +
-                "\tp19 INT NOT NULL,\n" +
-                "\tp20 INT NOT NULL\n" +
-                ");\n" +
-                "\n" +
-                "alter table races add constraint uq_races UNIQUE(date, trackname);\n"+
-                "ALTER TABLE races ADD CONSTRAINT races_fk0 FOREIGN KEY (p1) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk1 FOREIGN KEY (p2) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk2 FOREIGN KEY (p3) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk3 FOREIGN KEY (p4) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk4 FOREIGN KEY (p5) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk5 FOREIGN KEY (p6) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk6 FOREIGN KEY (p7) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk7 FOREIGN KEY (p8) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk8 FOREIGN KEY (p9) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk9 FOREIGN KEY (p10) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk10 FOREIGN KEY (p11) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk11 FOREIGN KEY (p12) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk12 FOREIGN KEY (p13) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk13 FOREIGN KEY (p14) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk14 FOREIGN KEY (p15) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk15 FOREIGN KEY (p16) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk16 FOREIGN KEY (p17) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk17 FOREIGN KEY (p18) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk18 FOREIGN KEY (p19) REFERENCES drivers(dID);\n" +
-                "ALTER TABLE races ADD CONSTRAINT races_fk19 FOREIGN KEY (p20) REFERENCES drivers(dID);";
+    public void createTables() throws SQLException, FileNotFoundException {
+        FileActions FA = new FileActions();
+        String sql = FA.load("createTables");
         //ektelesi tou querry
         int row = stmt.executeUpdate(sql);
     }
 
     //"gemizei" ta tables me dedomena
-    public void populateTables() throws SQLException {
+    public void populateTables() throws SQLException, IOException {
+        FileActions FA = new FileActions();
         //create admin acc
         String sql = "insert into users (uName, uPass, isAdmin) values ('admin', ?, 1);";
         PreparedStatement pst = conn.prepareStatement(sql);
+        //password hashing for security
         pst.setString(1, MD5.getMd5("1234"));
+        //insert the admin user
         pst.executeUpdate();
-        //insert every 2022 driver
-        sql = "insert into drivers values \n" +
-                "(24, 'Guanyu Zhou'),\n" +
-                "(77, 'Valtteri Bottas'),\n" +
-                "(10, 'Pierre Gasly'),\n" +
-                "(22, 'Yuki Tsunoda'),\n" +
-                "(14, 'Fernando Alonso'),\n" +
-                "(31, 'Esteban Ocon'),\n" +
-                "(27, 'Nico Hulkenberg'),\n" +
-                "(5, 'Sebastian Vettel'),\n" +
-                "(18, 'Lance Stroll'),\n" +
-                "(16, 'Charles Leclerc'),\n" +
-                "(55, 'Carlos Sainz Jr.'),\n" +
-                "(20, 'Kevin Magnussen'),\n" +
-                "(47, 'Mick Schumacher'),\n" +
-                "(3, 'Daniel Ricciardo'),\n" +
-                "(4, 'Lando Norris'),\n" +
-                "(44, 'Lewis Hamilton'),\n" +
-                "(63, 'George Russell'),\n" +
-                "(1, 'Max Verstappen'),\n" +
-                "(11, 'Sergio Perez'),\n" +
-                "(6, 'Nicholas Latifi'),\n" +
-                "(23, 'Alexander Albon')\n";
+
+        //insert every 2021 and 2022 driver
+        sql = FA.load("driverInfo");
+        //execute the insert driver query
         int row = stmt.executeUpdate(sql);
+
+        //insert every 2021 race result
+        sql = FA.load("2021RaceInfo");
+        //execute the insert driver query
+        row = stmt.executeUpdate(sql);
     }
 
     //elenxos gia log in stin vasi
@@ -191,7 +124,6 @@ public class DBActions {
         //EXEI MPEI CONSTRAINT KAI STIN VASI!!!!
         boolean result = checkIfRaceExists(year, trackName);
         if (result) {
-            // to ?, ?, 0 simenei oti oloi oi users mesw tou register from den tha exoun admin priviliges
             String sql = "INSERT INTO \"RACES\"(\"TRACKNAME\",\"DATE\",\"P1\",\"P2\",\"P3\",\"P4\",\"P5\",\"P6\",\"P7\",\"P8\",\"P9\",\"P10\"," +
                     "\"P11\",\"P12\",\"P13\",\"P14\",\"P15\",\"P16\",\"P17\",\"P18\",\"P19\",\"P20\")" +
                     "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";

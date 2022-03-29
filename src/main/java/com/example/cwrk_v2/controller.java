@@ -11,7 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 public class controller {
@@ -65,6 +67,7 @@ public class controller {
 
     //dimiourgia table stin DB me onoma test
     public void createAndPopulateTables(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
+
         DBActions db = new DBActions();
         db.createTables();
         db.populateTables();
