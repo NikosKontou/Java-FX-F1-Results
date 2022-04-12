@@ -38,12 +38,35 @@
                   <Button fx:id="sumbitQueryButton" mnemonicParsing="false" onAction="#submitQuery" text="Submit" />
                </children>
             </HBox>
-            <HBox alignment="CENTER">
+            <VBox>
                <children>
-                  <Label fx:id="queryResultTrackName" />
-                  <Label fx:id="queryResult" />
+                  <HBox>
+                     <children>
+                        <Label fx:id="queryResultTrackName" />
+                        <Label fx:id="queryResultP1" />
+                        <Label fx:id="queryResultP2" />
+                        <Label fx:id="queryResultP3" />
+                        <Label fx:id="queryResultP4" />
+                        <Label fx:id="queryResultP5" />
+                        <Label fx:id="queryResultP6" />
+                        <Label fx:id="queryResultP7" />
+                        <Label fx:id="queryResultP8" />
+                        <Label fx:id="queryResultP9" />
+                        <Label fx:id="queryResultP10" />
+                        <Label fx:id="queryResultP11" />
+                        <Label fx:id="queryResultP12" />
+                        <Label fx:id="queryResultP13" />
+                        <Label fx:id="queryResultP14" />
+                        <Label fx:id="queryResultP15" />
+                        <Label fx:id="queryResultP16" />
+                        <Label fx:id="queryResultP17" />
+                        <Label fx:id="queryResultP18" />
+                        <Label fx:id="queryResultP19" />
+                        <Label fx:id="queryResultP20" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
          </children>
       </VBox>
    </center>

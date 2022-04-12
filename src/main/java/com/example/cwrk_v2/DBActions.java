@@ -207,28 +207,36 @@ public class DBActions {
     }
 
 
-    public String[] showRacesPerYear(int year) throws SQLException {
-        String[] result = new String[2];
-        result[0] = "";
-        result[1] = "";
+    public ArrayList<ArrayList> showRacesPerYear(int year) throws SQLException {
+
+        //exporting array list in order to have the oportinity to create a better layout
+        ArrayList <ArrayList> results = new ArrayList<>();
+        ArrayList <String> driverNames  = new ArrayList<String>();
+        ArrayList <String> trackNames   = new ArrayList<String>();
+        results.add(trackNames);
+        results.add(driverNames);
         //show every race of a specific year sorted by the order they were done
         ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = " + year + " order by round");
+
         while (res.next()) {
             //      System.out.println("has next");
-            String trackName = (res.getObject("TRACKNAME")).toString();
-            while (trackName.length() < 27) {
-                trackName += " ";
-            }
-            result[0] += trackName + "\t\t";
+
+             String trackName = (res.getObject("TRACKNAME")).toString();
+            String tName = trackName.substring(0, 3).toUpperCase(Locale.ROOT);
+
+
+            trackNames.add(tName + "\n");
             //parse evey position and save it in the string
-            for (int i = 1; i < 21; i++) {
-                result[1] += findDriverName(Integer.parseInt((res.getObject("p" + i)).toString())) + " ";
+            for (int i =0;i<20;i++){
+                driverNames.add("");
+
             }
-            result[0] += "\n";
-            result[1] += "\n";
+            for (int i = 1; i < 21; i++) {
+                driverNames.set(i-1,driverNames.get(i-1)+findDriverName(Integer.parseInt((res.getObject("p" + i)).toString()))+"\n");
+            }
+
         }
-        //  System.out.println(result);
-        return result;
+        return results;
 
     }
 
@@ -299,9 +307,11 @@ public class DBActions {
         while (iterator.hasNext()) {
             //save the sorted result to an array in order to return them
             Map.Entry mp = (Map.Entry) iterator.next();
-            result[0] += findDriverName((Integer) mp.getKey()) + "\n";
-            result[1] += mp.getValue() + "\n";
-
+            //apothikeusi mono ton odigwn pou exoun pontous dioti i list exei kai allous pou den simetixan tin sigkekrimeni xronia
+            if(Integer.parseInt(mp.getValue().toString())!=0) {
+                result[0] += findDriverName((Integer) mp.getKey()) + "\n";
+                result[1] += mp.getValue() + "\n";
+            }
         }
 
 
@@ -354,22 +364,5 @@ public class DBActions {
         return sorted;
     }
 
-/*
-    //sort any map by value
-    static <K,V extends Comparable<? super V>>
-    SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
-        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
-                new Comparator<Map.Entry<K,V>>() {
-                    //sort by descending value order
-                    @Override public int compare(Map.Entry<K,V> e2, Map.Entry<K,V> e1) {
-                        int res = e1.getValue().compareTo(e2.getValue());
-                        return res != 0 ? res : 1;
-                    }
-                }
-        );
-        sortedEntries.addAll(map.entrySet());
-        return sortedEntries;
-    }
-    */
 
 }
