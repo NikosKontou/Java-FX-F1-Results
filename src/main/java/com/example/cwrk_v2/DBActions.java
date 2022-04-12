@@ -254,14 +254,15 @@ public class DBActions {
         String[] result = new String[2];
         result[0] = "";
         result[1] = "";
-        Map<Integer, Integer> HMResult = new TreeMap<Integer,Integer>();
-        Integer[] driverIDs = parseDrivers();
+        Map<Integer, Integer> HMResult = new TreeMap<Integer, Integer>();
+        ArrayList<Integer> driverIDs = parseDrivers();
         //start every driver with 0 points
-        for (int i = 0; i < 21; i++) {
-            HMResult.put(driverIDs[i], 0);
+        System.out.println(driverIDs.size());
+        for (int i = 0; i < driverIDs.size(); i++) {
+            HMResult.put(driverIDs.get(i), 0);
         }
         //show every race of a specific year sorted by the order they were done
-        ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = 2021 order by round");
+        ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = " + year + " order by round");
         while (res.next()) {
             //parse the query result
             for (Map.Entry<Integer, Integer> set : HMResult.entrySet()) {
@@ -287,19 +288,19 @@ public class DBActions {
                 } else if (Integer.parseInt(set.getKey().toString()) == Integer.parseInt((res.getObject("p10")).toString())) {
                     HMResult.put(set.getKey(), set.getValue() + 1);
                 }
-        }
+            }
 
         }
         //save the sorted result
-        Map sortedResult =entriesSortedByValues(HMResult);
+        Map sortedResult = entriesSortedByValues(HMResult);
         //create a set and iterator to parse the key, value pairs
         Set set = sortedResult.entrySet();
         Iterator iterator = set.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             //save the sorted result to an array in order to return them
-            Map.Entry mp = (Map.Entry)iterator.next();
-            result[0]+= findDriverName((Integer) mp.getKey())+"\n";
-            result[1]+=mp.getValue()+"\n";
+            Map.Entry mp = (Map.Entry) iterator.next();
+            result[0] += findDriverName((Integer) mp.getKey()) + "\n";
+            result[1] += mp.getValue() + "\n";
 
         }
 
@@ -307,12 +308,12 @@ public class DBActions {
         return result;
     }
 
-    public Integer[] parseDrivers() throws SQLException {
-        Integer[] results = new Integer[30];
+    public ArrayList<Integer> parseDrivers() throws SQLException {
+        ArrayList<Integer> results = new ArrayList<Integer>();
         ResultSet res = conn.createStatement().executeQuery("SELECT * FROM drivers order by did");
         int i = 0;
         while (res.next()) {
-            results[i] = (Integer.parseInt((res.getObject("DID")).toString()));
+            results.add((Integer.parseInt((res.getObject("DID")).toString())));
             i++;
         }
         return results;
@@ -327,8 +328,7 @@ public class DBActions {
     }
 
 
-    public static <K, V extends Comparable<V> > Map<K, V> entriesSortedByValues(final Map<K, V> map)
-    {
+    public static <K, V extends Comparable<V>> Map<K, V> entriesSortedByValues(final Map<K, V> map) {
         // Static Method with return type Map and
         // extending comparator class which compares values
         // associated with two keys
@@ -336,8 +336,7 @@ public class DBActions {
 
             // return comparison results of values of
             // two keys
-            public int compare(K k1, K k2)
-            {
+            public int compare(K k1, K k2) {
                 int comp = map.get(k2).compareTo(
                         map.get(k1));
                 if (comp == 0)

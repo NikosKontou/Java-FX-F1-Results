@@ -13,6 +13,8 @@
    <center>
       <VBox alignment="CENTER">
          <children>
+            <Label fx:id="errorMessage" />
+            <TextField fx:id="yearField" maxWidth="150.0" promptText="YYYY" />
             <HBox alignment="CENTER">
                <children>
                   <Label fx:id="queryResult" BorderPane.alignment="CENTER" />
