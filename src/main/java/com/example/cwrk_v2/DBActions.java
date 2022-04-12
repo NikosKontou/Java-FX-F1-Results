@@ -290,15 +290,20 @@ public class DBActions {
         }
 
         }
-        // Printing all elements of the sorted Map
-        System.out.println(entriesSortedByValues(HMResult));
-        // but save to result the unsorted tables
-        for (Map.Entry<Integer, Integer> set :
-                 HMResult.entrySet()) {
-                //convert the driver number in his real name
-                result[0]+= findDriverName(set.getKey())+"\n";
-                result[1]+=set.getValue()+"\n";
+        //save the sorted result
+        Map sortedResult =entriesSortedByValues(HMResult);
+        //create a set and iterator to parse the key, value pairs
+        Set set = sortedResult.entrySet();
+        Iterator iterator = set.iterator();
+        while (iterator.hasNext()){
+            //save the sorted result to an array in order to return them
+            Map.Entry mp = (Map.Entry)iterator.next();
+            result[0]+= findDriverName((Integer) mp.getKey())+"\n";
+            result[1]+=mp.getValue()+"\n";
+
         }
+
+
         return result;
     }
 
@@ -322,6 +327,35 @@ public class DBActions {
     }
 
 
+    public static <K, V extends Comparable<V> > Map<K, V> entriesSortedByValues(final Map<K, V> map)
+    {
+        // Static Method with return type Map and
+        // extending comparator class which compares values
+        // associated with two keys
+        Comparator<K> valueComparator = new Comparator<K>() {
+
+            // return comparison results of values of
+            // two keys
+            public int compare(K k1, K k2)
+            {
+                int comp = map.get(k2).compareTo(
+                        map.get(k1));
+                if (comp == 0)
+                    return 1;
+                else
+                    return comp;
+            }
+
+        };
+        // SortedMap created using the comparator
+        Map<K, V> sorted = new TreeMap<K, V>(valueComparator);
+
+        sorted.putAll(map);
+
+        return sorted;
+    }
+
+/*
     //sort any map by value
     static <K,V extends Comparable<? super V>>
     SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
@@ -337,4 +371,6 @@ public class DBActions {
         sortedEntries.addAll(map.entrySet());
         return sortedEntries;
     }
+    */
+
 }

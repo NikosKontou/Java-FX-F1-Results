@@ -39,8 +39,9 @@ public class ShowPointsController {
             String [] result= new String[2];
             //save the function result in order to run it only once
             result=dba.showDriversPerYear(2021);
-
+            //show the names of the drivers
            queryResult.setText(result[0]);
+           //show the points of the drivers
            queryResultPoints.setText(result[1]);
         }catch (NullPointerException e){
             System.out.println("Null pointer exception at submitquery event \n"+e);

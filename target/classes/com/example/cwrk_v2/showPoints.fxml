@@ -19,7 +19,7 @@
                   <Label fx:id="queryResultPoints" />
                </children>
             </HBox>
-            <Button fx:id="submitQuery" mnemonicParsing="false" onAction="#submitQueryEvent" text="Button" />
+            <Button fx:id="submitQuery" mnemonicParsing="false" onAction="#submitQueryEvent" text="Show driver Standings" />
          </children>
       </VBox>
    </center>
