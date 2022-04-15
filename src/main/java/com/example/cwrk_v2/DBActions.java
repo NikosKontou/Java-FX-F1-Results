@@ -226,6 +226,7 @@ public class DBActions {
 
 
             trackNames.add(tName + "\n");
+            System.out.println(trackNames);
             //parse evey position and save it in the string
             for (int i =0;i<20;i++){
                 driverNames.add("");
