@@ -8,6 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -27,6 +30,9 @@ public class controller {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    @FXML
+    BorderPane loginBorderPane;
+
 
     public void logInToStartMenu(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
         //extract the textfiled value

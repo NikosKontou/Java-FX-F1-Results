@@ -26,3 +26,7 @@ replay_pid*
 # json files used as database
 data/*
 .json
+
+# custom additions
+.jpg
+.xlsx

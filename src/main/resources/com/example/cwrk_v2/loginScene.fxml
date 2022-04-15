@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -10,31 +12,50 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cwrk_v2.controller">
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <StackPane>
          <children>
-            <Label fx:id="warningLogIn" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <ImageView fitHeight="758.0" fitWidth="1348.0" nodeOrientation="INHERIT" opacity="0.8" pickOnBounds="true" preserveRatio="true" translateZ="-1.0">
+               <image>
+                  <!--Michael Schumacher image belongs to the respectfull owner and is only used for academic purposes-->
+                  <Image url="@podium-michael-schumacher-ferrari.jpg" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </ImageView>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="username" />
-                  <TextField fx:id="usernameTField" />
+                  <Label fx:id="warningLogIn" />
+                  <HBox alignment="CENTER" maxWidth="400.0" prefHeight="75.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #f4f4f4;">
+                     <children>
+                        <Label text="Username" />
+                        <TextField fx:id="usernameTField" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" maxWidth="400.0" prefHeight="75.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #f4f4f4;">
+                     <children>
+                        <Label text="Password" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <PasswordField fx:id="passwordTField" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #f4f4f4;">
+                     <children>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#logInToStartMenu" text="Log in" textAlignment="CENTER" />
+                        <Label fx:id="loginWarning" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" />
+                        <Hyperlink fx:id="registerUserLink" onAction="#registerUser" text="Register new user" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="100.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-               <children>
-                  <Label text="password" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" />
-                  <PasswordField fx:id="passwordTField" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-               <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#logInToStartMenu" text="log in" textAlignment="CENTER" />
-                  <Label fx:id="loginWarning" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" />
-                  <Hyperlink fx:id="registerUserLink" onAction="#registerUser" text="Register new user" />
-               </children>
-            </HBox>
+            </VBox>
          </children>
-      </VBox>
+      </StackPane>
    </center>
    <top>
       <HBox spacing="5.0">

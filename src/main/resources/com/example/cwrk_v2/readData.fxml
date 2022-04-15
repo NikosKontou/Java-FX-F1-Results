@@ -42,7 +42,7 @@
                <children>
                   <VBox>
                      <children>
-                        <Label fx:id="trackNameLabel" text="Track name" />
+                        <Label fx:id="trackNameLabel" text="Track name" visible="false"/>
                         <Label fx:id="queryResultTrackName" alignment="CENTER" />
                      </children>
                      <padding>
@@ -51,7 +51,7 @@
                   </VBox>
                   <VBox>
                      <children>
-                        <Label fx:id="firstLabel" text="First"  />
+                        <Label fx:id="firstLabel" text="First" visible="false" />
                         <Label fx:id="queryResultP1" alignment="CENTER" textAlignment="CENTER" />
                      </children>
                      <padding>
@@ -60,7 +60,7 @@
                   </VBox>
                   <VBox>
                      <children>
-                        <Label fx:id="secondLabel" text="Second"  />
+                        <Label fx:id="secondLabel" text="Second"  visible="false"/>
                         <Label fx:id="queryResultP2" alignment="CENTER" textAlignment="CENTER" />
                      </children>
                      <padding>
@@ -69,7 +69,7 @@
                   </VBox>
                   <VBox>
                      <children>
-                        <Label fx:id="thirdLabel" text="Third"/>
+                        <Label fx:id="thirdLabel" text="Third" visible="false"/>
                         <Label fx:id="queryResultP3" alignment="CENTER" textAlignment="CENTER" />
                      </children>
                      <padding>

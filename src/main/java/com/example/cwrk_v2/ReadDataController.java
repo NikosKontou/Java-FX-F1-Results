@@ -32,6 +32,11 @@ public class ReadDataController {
 
     @FXML
     TextField yearTF;
+    public void initialize(){
+
+
+
+    }
 
     public void goToMainMenuEvent(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
@@ -44,14 +49,34 @@ public class ReadDataController {
     public void submitQuery(ActionEvent event) throws SQLException, ClassNotFoundException {
         DBActions dba = new DBActions();
         ArrayList<ArrayList> yearResult = new ArrayList<>();
+        //set headers visible only after submiting a request
+        trackNameLabel.setVisible(true);
+        firstLabel.setVisible(true);
+        secondLabel.setVisible(true);
+        thirdLabel.setVisible(true);
+        p4Label.setVisible(true);
+        p5Label.setVisible(true);
+        p6Label.setVisible(true);
+        p7Label.setVisible(true);
+        p8Label.setVisible(true);
+        p9Label.setVisible(true);
+        p10Label.setVisible(true);
+        p11Label.setVisible(true);
+        p12Label.setVisible(true);
+        p13Label.setVisible(true);
+        p14Label.setVisible(true);
+        p15Label.setVisible(true);
+        p16Label.setVisible(true);
+        p17Label.setVisible(true);
+        p18Label.setVisible(true);
+        p19Label.setVisible(true);
+        p20Label.setVisible(true);
+        //Group headerLabels = new Group();
+        //add every header label in a group so that it will be easier to controll it and change the visibility
+        //headerLabels.getChildren().addAll(trackNameLabel, firstLabel, secondLabel, thirdLabel, p4Label, p5Label, p6Label, p7Label, p8Label, p9Label, p10Label, p11Label, p12Label, p13Label, p14Label, p15Label, p16Label, p17Label, p18Label, p19Label, p20Label);
+       // headerLabels.setVisible(true);
         try {
-            Group hiddenLabels = new Group();
-            //add every header label in a group so that it will be easier to controll it and change the visibility
-           // hiddenLabels.getChildren().addAll(trackNameLabel, firstLabel);
-            //secondLabel, thirdLabel, p4Label, p5Label, p6Label, p7Label, p8Label, p9Label, p10Label, p11Label, p12Label, p13Label, p14Label, p15Label, p16Label, p17Label, p18Label, p19Label, p20Label);
-            //hiddenLabels.setVisible(true);
-            p20Label.setVisible(true);
-            yearResult = dba.showRacesPerYear(Integer.parseInt(yearTF.getText().toString()));
+      yearResult = dba.showRacesPerYear(Integer.parseInt(yearTF.getText().toString()));
             //provoli olwn ton apotelesmatwn enos sigkekrimenou etous
             //to arraylist molis ginetai to string prosthetei "[" "," kai "[" ta opoia fenontia asximai kai sinepos afairounte
             queryResultTrackName.setText(yearResult.get(0).toString().replace(",", "").replace("[", "").replace("]", ""));
@@ -69,6 +94,7 @@ public class ReadDataController {
             queryResultP15.setBackground(new Background(new BackgroundFill(Color.rgb(220, 220, 220), CornerRadii.EMPTY, Insets.EMPTY)));
             queryResultP17.setBackground(new Background(new BackgroundFill(Color.rgb(220, 220, 220), CornerRadii.EMPTY, Insets.EMPTY)));
             queryResultP19.setBackground(new Background(new BackgroundFill(Color.rgb(220, 220, 220), CornerRadii.EMPTY, Insets.EMPTY)));
+            //exception handling must be impemented in case of no data returned by the query
             //populate the labels with data
             queryResultP1.setText(yearResult.get(1).get(0).toString());
             queryResultP2.setText(yearResult.get(1).get(1).toString());

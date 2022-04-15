@@ -30,7 +30,7 @@
       </VBox>
    </top>
    <center>
-      <VBox>
+      <VBox alignment="TOP_CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
                <children>
@@ -38,35 +38,202 @@
                   <Button fx:id="sumbitQueryButton" mnemonicParsing="false" onAction="#submitQuery" text="Submit" />
                </children>
             </HBox>
-            <VBox>
+            <HBox alignment="CENTER">
                <children>
-                  <HBox>
+                  <VBox>
                      <children>
-                        <Label fx:id="queryResultTrackName" />
-                        <Label fx:id="queryResultP1" />
-                        <Label fx:id="queryResultP2" />
-                        <Label fx:id="queryResultP3" />
-                        <Label fx:id="queryResultP4" />
-                        <Label fx:id="queryResultP5" />
-                        <Label fx:id="queryResultP6" />
-                        <Label fx:id="queryResultP7" />
-                        <Label fx:id="queryResultP8" />
-                        <Label fx:id="queryResultP9" />
-                        <Label fx:id="queryResultP10" />
-                        <Label fx:id="queryResultP11" />
-                        <Label fx:id="queryResultP12" />
-                        <Label fx:id="queryResultP13" />
-                        <Label fx:id="queryResultP14" />
-                        <Label fx:id="queryResultP15" />
-                        <Label fx:id="queryResultP16" />
-                        <Label fx:id="queryResultP17" />
-                        <Label fx:id="queryResultP18" />
-                        <Label fx:id="queryResultP19" />
-                        <Label fx:id="queryResultP20" />
+                        <Label fx:id="trackNameLabel" text="Track name" visible="false"/>
+                        <Label fx:id="queryResultTrackName" alignment="CENTER" />
                      </children>
-                  </HBox>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="firstLabel" text="First" visible="false" />
+                        <Label fx:id="queryResultP1" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="secondLabel" text="Second"  visible="false"/>
+                        <Label fx:id="queryResultP2" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="thirdLabel" text="Third" visible="false"/>
+                        <Label fx:id="queryResultP3" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p4Label" text="P4" visible="false" />
+                        <Label fx:id="queryResultP4" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p5Label" text="P5" visible="false" />
+                        <Label fx:id="queryResultP5" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p6Label" text="P6" visible="false" />
+                        <Label fx:id="queryResultP6" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p7Label" text="P7" visible="false" />
+                        <Label fx:id="queryResultP7" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p8Label" text="P8" visible="false" />
+                        <Label fx:id="queryResultP8" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p9Label" text="P9" visible="false" />
+                        <Label fx:id="queryResultP9" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p10Label" text="P10" visible="false" />
+                        <Label fx:id="queryResultP10" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p11Label" text="P11" visible="false" />
+                        <Label fx:id="queryResultP11" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p12Label" text="P12" visible="false" />
+                        <Label fx:id="queryResultP12" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p13Label" text="P13" visible="false" />
+                        <Label fx:id="queryResultP13" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p14Label" text="P14" visible="false" />
+                        <Label fx:id="queryResultP14" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p15Label" text="P15" visible="false" />
+                        <Label fx:id="queryResultP15" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p16Label" text="P16" visible="false" />
+                        <Label fx:id="queryResultP16" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p17Label" text="P17" visible="false" />
+                        <Label fx:id="queryResultP17" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p18Label" text="P18" visible="false" />
+                        <Label fx:id="queryResultP18" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p19Label" text="P19" visible="false" />
+                        <Label fx:id="queryResultP19" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label fx:id="p20Label" text="P20" visible="false" />
+                        <Label fx:id="queryResultP20" alignment="CENTER" textAlignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets right="7.0" />
+                     </padding>
+                  </VBox>
                </children>
-            </VBox>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
          </children>
       </VBox>
    </center>
