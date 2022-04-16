@@ -36,6 +36,7 @@
                <children>
                   <Label fx:id="Round" text="round" />
                   <TextField fx:id="round" promptText="NN" />
+                  <Label fx:id="submitResultLabel" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">

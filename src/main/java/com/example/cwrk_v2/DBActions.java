@@ -1,7 +1,10 @@
 package com.example.cwrk_v2;
 
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.*;
 
@@ -118,7 +121,7 @@ public class DBActions {
 
     public boolean insertRace(String trackName, int year, int round, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, int p12, int p13, int p14, int p15, int p16, int p17, int p18, int p19, int p20) throws SQLException {
         //se periptwsi pou o sindiasmos event kai xronias iparxei, den tha dimiourgeite i engrafi
-        //vasi kanonismwn Formula One Managment, den mporei na dieksaxthoun 2 agwnes stin idia pista xwris diaforetiko onoma
+        //vasi kanonismwn Formula One Management, den mporei na dieksaxthoun 2 agwnes stin idia pista xwris diaforetiko onoma
         //p.x. to 2020 gia na ginoun 2 agwnes stin idia pista o enas onomastike "FORMULA 1 ROLEX GROSSER PREIS VON ÖSTERREICH 2020" kai o allos "FORMULA 1 PIRELLI GROSSER PREIS DER STEIERMARK 2020"
         //EXEI MPEI CONSTRAINT KAI STIN VASI!!!!
         boolean result = checkIfRaceExists(year, trackName);
@@ -150,9 +153,21 @@ public class DBActions {
             pst.setInt(21, p18);
             pst.setInt(22, p19);
             pst.setInt(23, p20);
-            //ektelesi query
-            pst.executeUpdate();
+            //execute query
+            try {
+                pst.executeUpdate();
+            }catch (JdbcSQLIntegrityConstraintViolationException e){
+                System.out.println("Most likely you have entered a driver id that does not exist in the DB \n more details: "+e);
+                result = false;
+
+            }
+            /*int updateResult =
+            if (updateResult==0){
+                return false;
+            }
+            else return true;*/
         }
+        System.out.println(result);
         return result;
 
     }
@@ -175,30 +190,32 @@ public class DBActions {
 
     //elenxos monadikotitas agwna prin apostalei stin vasi
     public boolean checkIfRaceExists(int year, String trackName) throws SQLException {
-        boolean uniqueUser = true;
-        //pairnei ola to username apo tin ontotita stin vasi
+        boolean uniqueRace = true;
+        //get every race from the database
         ResultSet res = stmt.executeQuery("SELECT * FROM races");
         while (res.next()) {
             String tname = (res.getObject("TRACKNAME")).toString();
             int date = Integer.parseInt((res.getObject("date")).toString());
-            //ean uparxei to antistoi username gyrna false
+            //if the trackname is already saved, check the year
             if (tname.equals(trackName)) {
                 if (date == year) {
-                    uniqueUser = false;
+                    //if there is a race done in the same track, the same year
+                    //then do not update the DB
+                    uniqueRace = false;
                 }
             }
         }
-        return uniqueUser;
+        return uniqueRace;
     }
 
-    //elenxos oti o kainourgios xristis den exei idio username me proiparxwn
+    //check that the new user submited unique username
     public boolean checkIfDriverExists(int driverID) throws SQLException {
         boolean doesNotExist = true;
-        //pairnei ola to username apo tin ontotita stin vasi
+        //get every username from the database
         ResultSet res = stmt.executeQuery("SELECT * FROM drivers");
         while (res.next()) {
             int dID = Integer.parseInt(String.valueOf((res.getObject("dID"))));
-            //ean uparxei to antistoi username gyrna false
+            //if the same username is found, return false and do not proceed
             if (dID == driverID) {
                 doesNotExist = false;
             }
@@ -210,30 +227,29 @@ public class DBActions {
     public ArrayList<ArrayList> showRacesPerYear(int year) throws SQLException {
 
         //exporting array list in order to have the oportinity to create a better layout
-        ArrayList <ArrayList> results = new ArrayList<>();
-        ArrayList <String> driverNames  = new ArrayList<String>();
-        ArrayList <String> trackNames   = new ArrayList<String>();
+        ArrayList<ArrayList> results = new ArrayList<>();
+        ArrayList<String> driverNames = new ArrayList<String>();
+        ArrayList<String> trackNames = new ArrayList<String>();
         results.add(trackNames);
         results.add(driverNames);
         //show every race of a specific year sorted by the order they were done
         ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = " + year + " order by round");
 
         while (res.next()) {
-            //      System.out.println("has next");
 
-             String trackName = (res.getObject("TRACKNAME")).toString();
-            String tName = trackName.substring(0, 3).toUpperCase(Locale.ROOT);
+            String trackName = (res.getObject("TRACKNAME")).toString();
+            String tName = trackName.substring(0, 5).toUpperCase(Locale.ROOT);
 
 
             trackNames.add(tName + "\n");
-            System.out.println(trackNames);
             //parse evey position and save it in the string
-            for (int i =0;i<20;i++){
+            for (int i = 0; i < 20; i++) {
                 driverNames.add("");
 
             }
+            //every year there are 20 drivers
             for (int i = 1; i < 21; i++) {
-                driverNames.set(i-1,driverNames.get(i-1)+findDriverName(Integer.parseInt((res.getObject("p" + i)).toString()))+"\n");
+                driverNames.set(i - 1, driverNames.get(i - 1) + findDriverName(Integer.parseInt((res.getObject("p" + i)).toString())) + "\n");
             }
 
         }
@@ -309,7 +325,7 @@ public class DBActions {
             //save the sorted result to an array in order to return them
             Map.Entry mp = (Map.Entry) iterator.next();
             //apothikeusi mono ton odigwn pou exoun pontous dioti i list exei kai allous pou den simetixan tin sigkekrimeni xronia
-            if(Integer.parseInt(mp.getValue().toString())!=0) {
+            if (Integer.parseInt(mp.getValue().toString()) != 0) {
                 result[0] += findDriverName((Integer) mp.getKey()) + "\n";
                 result[1] += mp.getValue() + "\n";
             }

@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-//ipologismos md5 hash
+//calculate md5 hash
 public class MD5 {
     public static String getMd5(String input) {
         try {
@@ -19,7 +19,7 @@ public class MD5 {
             // Convert byte array into signum representation
             BigInteger no = new BigInteger(1, messageDigest);
 
-            // metatropi se 16diko
+            // convert to hexs
             String hashtext = no.toString(16);
             while (hashtext.length() < 32) {
                 hashtext = "0" + hashtext;
