@@ -161,8 +161,8 @@ public class DBActions {
             //execute query
             try {
                 pst.executeUpdate();
-            }catch (JdbcSQLIntegrityConstraintViolationException e){
-                System.out.println("Most likely you have entered a driver id that does not exist in the DB \n more details: "+e);
+            } catch (JdbcSQLIntegrityConstraintViolationException e) {
+                System.out.println("Most likely you have entered a driver id that does not exist in the DB \n more details: " + e);
                 result = false;
 
             }
@@ -211,8 +211,8 @@ public class DBActions {
             //execute query
             try {
                 pst.executeUpdate();
-            }catch (JdbcSQLIntegrityConstraintViolationException e){
-                System.out.println("Most likely you have entered a driver id that does not exist in the DB \n more details: "+e);
+            } catch (JdbcSQLIntegrityConstraintViolationException e) {
+                System.out.println("Most likely you have entered a driver id that does not exist in the DB \n more details: " + e);
                 result = false;
 
             }
@@ -279,6 +279,7 @@ public class DBActions {
         }
         return uniqueRace;
     }
+
     //check that the new user submited unique username
     public boolean checkIfDriverExists(int driverID) throws SQLException {
         boolean doesNotExist = true;
@@ -294,6 +295,42 @@ public class DBActions {
         return doesNotExist;
     }
 
+
+    public ArrayList<ArrayList> showRaceWeekend(int year, int round) throws SQLException {
+        //create an arraylist that contains 3 arraylists that contain one dimensional tables [DID, POS]
+        ArrayList<ArrayList> results = new ArrayList<>();
+        ArrayList<Integer> qualifyingResults = new ArrayList<>();
+        ArrayList<Integer> raceResults = new ArrayList<>();
+        ArrayList<ArrayList> positionsGained = new ArrayList<>();
+
+        results.add(qualifyingResults);
+        results.add(raceResults);
+
+        ResultSet res = stmt.executeQuery("SELECT * FROM QUALIFYING WHERE DATE=" + year + " AND ROUND=" + round);
+        //the result is a row with 24 columns so in order to parse it a for loop is nested
+        while (res.next()) {
+            for (int i = 1; i < 21; i++) {
+                qualifyingResults.add(Integer.parseInt(res.getObject("Q" + i).toString()));
+            }
+        }
+        res = stmt.executeQuery("SELECT * FROM RACES WHERE DATE=" + year + " AND ROUND=" + round);
+        //the result is a row with 24 collums so in order to parse it a for loop is nested
+        while (res.next()) {
+            for (int i = 1; i < 21; i++) {
+                raceResults.add(Integer.parseInt(res.getObject("P" + i).toString()));
+            }
+        }
+
+        for (int i=0;i<20;i++){
+            for (int y=0;y<20;y++){
+                if(qualifyingResults.get(i)==raceResults.get(y)){
+                    System.out.println("Driver with id "+qualifyingResults.get(i)+" Found \n he started on pos "+i+" and finished on pos: "+y);
+                }
+            }
+        }
+
+        return results;
+    }
 
     public ArrayList<ArrayList> showRacesPerYear(int year) throws SQLException {
 

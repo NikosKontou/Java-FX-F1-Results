@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-
 <?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
+
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cwrk_v2.ShowRaceWeekendController">
     <top>
         <VBox alignment="CENTER" spacing="10.0">
@@ -30,4 +31,35 @@
             </padding>
         </VBox>
     </top>
+   <center>
+      <VBox>
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+               <children>
+                  <Label text="Year" />
+                  <TextField fx:id="yearTF" promptText="YYYY" />
+                  <Label text="Round" />
+                  <TextField fx:id="roundTF" promptText="NN" />
+                  <Button mnemonicParsing="false" onAction="#submitRaceWeekendQuery" text="Submit" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+                     <children>
+                        <Label fx:id="qualifyingResult" />
+                     </children></VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+                     <children>
+                        <Label fx:id="raceResult" />
+                     </children></VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+                     <children>
+                        <Label fx:id="changedPositions" />
+                     </children></VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
 </BorderPane>
