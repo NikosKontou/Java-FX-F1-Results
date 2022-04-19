@@ -62,6 +62,15 @@ public class startingSceneController {
 
     }
 
+    public void showRaceWeekendEvent (ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("showRaceWeekend.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
     public void insertDataEvent(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("insertRaceData.fxml"));

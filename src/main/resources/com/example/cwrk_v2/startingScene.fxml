@@ -31,18 +31,19 @@
       </VBox>
    </top>
    <center>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER">
+            <VBox alignment="CENTER" spacing="30.0">
                <children>
-                  <Button fx:id="showData" mnemonicParsing="false" onAction="#showDataEvent" prefHeight="40.0" prefWidth="160.0" text="Προβολή αποτελεσματων" wrapText="true" />
-                  <Button fx:id="showPoints" mnemonicParsing="false" onAction="#showPointsEvent" prefHeight="40.0" prefWidth="160.0" text="Προβολή πόντων" wrapText="true" />
+                  <Button fx:id="showData" mnemonicParsing="false" onAction="#showDataEvent" prefHeight="40.0" prefWidth="160.0" text="Show yearly results" wrapText="true" />
+                  <Button fx:id="showPoints" mnemonicParsing="false" onAction="#showPointsEvent" prefHeight="40.0" prefWidth="160.0" text="Show points" wrapText="true" />
+                  <Button fx:id="showRaceWeekEnd" mnemonicParsing="false" onAction="#showRaceWeekendEvent" prefHeight="40.0" prefWidth="160.0" text="Show race weekend" wrapText="true" />
                </children>
             </VBox>
-            <VBox alignment="CENTER">
+            <VBox alignment="CENTER" spacing="30.0">
                <children>
-                  <Button fx:id="insertData" mnemonicParsing="false" onAction="#insertDataEvent" prefHeight="40.0" prefWidth="160.0" text="Εισαγωγή αποτελέσματος" wrapText="true" />
-                  <Button fx:id="insertDriverData" mnemonicParsing="false" onAction="#insertDriverDataEvent" prefHeight="40.0" prefWidth="160.0" text="Εισαγωγή οδηγού" wrapText="true" />
+                  <Button fx:id="insertData" mnemonicParsing="false" onAction="#insertDataEvent" prefHeight="40.0" prefWidth="160.0" text="Insert result" wrapText="true" />
+                  <Button fx:id="insertDriverData" mnemonicParsing="false" onAction="#insertDriverDataEvent" prefHeight="40.0" prefWidth="160.0" text="Insert driver" wrapText="true" />
                </children>
             </VBox>
          </children>

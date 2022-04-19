@@ -37,39 +37,10 @@ CREATE TABLE users (
                 p19 INT NOT NULL,
                 p20 INT NOT NULL
                 );
-
-                                CREATE TABLE qualifying (
-                qID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                trackName varchar(255) NOT NULL,
-                date INT NOT NULL,
-		round INT NOT NULL,
-                q1 INT NOT NULL,
-                q2 INT NOT NULL,
-                q3 INT NOT NULL,
-                q4 INT NOT NULL,
-                q5 INT NOT NULL,
-                q6 INT NOT NULL,
-                q7 INT NOT NULL,
-                q8 INT NOT NULL,
-                q9 INT NOT NULL,
-                q10 INT NOT NULL,
-                q11 INT NOT NULL,
-                q12 INT NOT NULL,
-                q13 INT NOT NULL,
-                q14 INT NOT NULL,
-                q15 INT NOT NULL,
-                q16 INT NOT NULL,
-                q17 INT NOT NULL,
-                q18 INT NOT NULL,
-                q19 INT NOT NULL,
-                q20 INT NOT NULL
-                );
                 
                 alter table races add constraint uq_races UNIQUE(date, trackname);
 		alter table races add constraint uq_rounds UNIQUE(date, round);
-        alter table qualifying add constraint uq_qualifying UNIQUE(date, round);
 		alter table users add constraint uq_uName UNIQUE(uName);
-
                 ALTER TABLE races ADD CONSTRAINT races_fk0 FOREIGN KEY (p1) REFERENCES drivers(dID);
                 ALTER TABLE races ADD CONSTRAINT races_fk1 FOREIGN KEY (p2) REFERENCES drivers(dID);
                 ALTER TABLE races ADD CONSTRAINT races_fk2 FOREIGN KEY (p3) REFERENCES drivers(dID);
@@ -90,24 +61,3 @@ CREATE TABLE users (
                 ALTER TABLE races ADD CONSTRAINT races_fk17 FOREIGN KEY (p18) REFERENCES drivers(dID);
                 ALTER TABLE races ADD CONSTRAINT races_fk18 FOREIGN KEY (p19) REFERENCES drivers(dID);
                 ALTER TABLE races ADD CONSTRAINT races_fk19 FOREIGN KEY (p20) REFERENCES drivers(dID);
-
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk0 FOREIGN KEY (q1) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk1 FOREIGN KEY (q2) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk2 FOREIGN KEY (q3) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk3 FOREIGN KEY (q4) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk4 FOREIGN KEY (q5) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk5 FOREIGN KEY (q6) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk6 FOREIGN KEY (q7) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk7 FOREIGN KEY (q8) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk8 FOREIGN KEY (q9) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk9 FOREIGN KEY (q10) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk10 FOREIGN KEY (q11) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk11 FOREIGN KEY (q12) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk12 FOREIGN KEY (q13) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk13 FOREIGN KEY (q14) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk14 FOREIGN KEY (q15) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk15 FOREIGN KEY (q16) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk16 FOREIGN KEY (q17) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk17 FOREIGN KEY (q18) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk18 FOREIGN KEY (q19) REFERENCES drivers(dID);
-                ALTER TABLE qualifying ADD CONSTRAINT qualifying_fk19 FOREIGN KEY (q20) REFERENCES drivers(dID);

@@ -127,9 +127,10 @@
                   <TextField fx:id="p20" promptText="NN" />
                </children>
             </HBox>
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER" spacing="30.0">
                <children>
-                  <Button fx:id="insertRaceDataButton" mnemonicParsing="false" onAction="#insertRaceData" text="Submit" />
+                  <Button fx:id="insertRaceDataButton" mnemonicParsing="false" onAction="#insertRaceData" text="Submit race" />
+                  <Button fx:id="insertQualifyingDataButton" mnemonicParsing="false" onAction="#insertQualifyingData" text="Submit qualifying" />
                </children>
             </HBox>
          </children>

@@ -52,7 +52,12 @@ public class DBActions {
 
         //insert every 2021 race result
         sql = FA.load("2021RaceInfo");
-        //execute the insert driver query
+        //execute the insert  query
+        row = stmt.executeUpdate(sql);
+
+        //insert every 2021 qualifying result
+        sql = FA.load("2021QLFInfo");
+        //execute the insert query
         row = stmt.executeUpdate(sql);
     }
 
@@ -161,11 +166,57 @@ public class DBActions {
                 result = false;
 
             }
-            /*int updateResult =
-            if (updateResult==0){
-                return false;
+
+        }
+        System.out.println(result);
+        return result;
+
+    }
+
+
+    public boolean insertQualifying(String trackName, int year, int round, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, int p12, int p13, int p14, int p15, int p16, int p17, int p18, int p19, int p20) throws SQLException {
+        //se periptwsi pou o sindiasmos event kai xronias iparxei, den tha dimiourgeite i engrafi
+        //vasi kanonismwn Formula One Management, den mporei na dieksaxthoun 2 events stin idia pista xwris diaforetiko onoma
+        //p.x. to 2020 gia na ginoun 2 agwnes stin idia pista o enas onomastike "FORMULA 1 ROLEX GROSSER PREIS VON ÖSTERREICH 2020" kai o allos "FORMULA 1 PIRELLI GROSSER PREIS DER STEIERMARK 2020"
+        //EXEI MPEI CONSTRAINT KAI STIN VASI!!!!
+        boolean result = checkIfQualifyingExists(year, trackName);
+        if (result) {
+            String sql = "INSERT INTO \"QUALIFYING\"(\"TRACKNAME\",\"DATE\",\"ROUND\",\"Q1\",\"Q2\",\"Q3\",\"Q4\",\"Q5\",\"Q6\",\"Q7\",\"Q8\",\"Q9\",\"Q10\"," +
+                    "\"Q11\",\"Q12\",\"Q13\",\"Q14\",\"Q15\",\"Q16\",\"Q17\",\"Q18\",\"Q19\",\"Q20\")" +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, trackName);
+            pst.setInt(2, year);
+            pst.setInt(3, round);
+            pst.setInt(4, p1);
+            pst.setInt(5, p2);
+            pst.setInt(6, p3);
+            pst.setInt(7, p4);
+            pst.setInt(8, p5);
+            pst.setInt(9, p6);
+            pst.setInt(10, p7);
+            pst.setInt(11, p8);
+            pst.setInt(12, p9);
+            pst.setInt(13, p10);
+            pst.setInt(14, p11);
+            pst.setInt(15, p12);
+            pst.setInt(16, p13);
+            pst.setInt(17, p14);
+            pst.setInt(18, p15);
+            pst.setInt(19, p16);
+            pst.setInt(20, p17);
+            pst.setInt(21, p18);
+            pst.setInt(22, p19);
+            pst.setInt(23, p20);
+            //execute query
+            try {
+                pst.executeUpdate();
+            }catch (JdbcSQLIntegrityConstraintViolationException e){
+                System.out.println("Most likely you have entered a driver id that does not exist in the DB \n more details: "+e);
+                result = false;
+
             }
-            else return true;*/
+
         }
         System.out.println(result);
         return result;
@@ -208,6 +259,26 @@ public class DBActions {
         return uniqueRace;
     }
 
+
+    //elenxos monadikotitas agwna prin apostalei stin vasi
+    public boolean checkIfQualifyingExists(int year, String trackName) throws SQLException {
+        boolean uniqueRace = true;
+        //get every race from the database
+        ResultSet res = stmt.executeQuery("SELECT * FROM qualifying");
+        while (res.next()) {
+            String tname = (res.getObject("TRACKNAME")).toString();
+            int date = Integer.parseInt((res.getObject("date")).toString());
+            //if the trackname is already saved, check the year
+            if (tname.equals(trackName)) {
+                if (date == year) {
+                    //if there is a race done in the same track, the same year
+                    //then do not update the DB
+                    uniqueRace = false;
+                }
+            }
+        }
+        return uniqueRace;
+    }
     //check that the new user submited unique username
     public boolean checkIfDriverExists(int driverID) throws SQLException {
         boolean doesNotExist = true;
