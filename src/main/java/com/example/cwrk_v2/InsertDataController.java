@@ -37,13 +37,21 @@ public class InsertDataController {
 
     public void insertDriver(ActionEvent event) throws SQLException, ClassNotFoundException {
         DBActions dba = new DBActions();
-        if(dba.insertDriver(Integer.parseInt(driverNumberTF.getText()), driverNameTF.getText())){
-            feedbackLabel.setTextFill(Color.rgb(30,250,80));
-            feedbackLabel.setText("New Driver was successfully created");
-        }else   {
+        if(CheckInputs.checkDriverNumber(driverNumberTF.getText())){
+            if(dba.insertDriver(Integer.parseInt(driverNumberTF.getText()), driverNameTF.getText())){
+                feedbackLabel.setTextFill(Color.rgb(30,250,80));
+                feedbackLabel.setText("New Driver was successfully created");
+            }else   {
+                feedbackLabel.setTextFill(Color.rgb(250,80,30));
+                feedbackLabel.setText("a Driver with this number already exists");
+            }
+        }else{
+            feedbackLabel.setVisible(true);
             feedbackLabel.setTextFill(Color.rgb(250,80,30));
-            feedbackLabel.setText("a Driver with this number already exists");
+            feedbackLabel.setText("Invalid input");
+
         }
+
     }
 
     //to back button fortwnei diaforetiko scene sto stage

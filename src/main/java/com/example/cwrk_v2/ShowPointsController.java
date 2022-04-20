@@ -38,14 +38,14 @@ public class ShowPointsController {
     public void submitQueryEvent(ActionEvent event) throws SQLException, ClassNotFoundException {
         DBActions dba = new DBActions();
         try {
-            //provoli olwn ton apotelesmatwn enos sigkekrimenou etous
+            //show every result of a specific year
             String [] result= new String[2];
             int date=0;
             try{
                 //save the user input in an integer
                 date = Integer.parseInt(yearField.getText().toString());
-                //check that the user gave a valid year format (first f1 race was at 1946
-                if(date<1946 ||date>3000){
+
+                if(!CheckInputs.checkYear(String.valueOf(date))){
                     errorMessage.setTextFill(Color.rgb(230,50,50));
                     errorMessage.setText("You must enter a valid year (e.g. 2021)");
                 }else{

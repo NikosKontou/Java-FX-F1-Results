@@ -304,59 +304,68 @@ public class DBActions {
         ArrayList<Integer> raceResults = new ArrayList<>();
         ArrayList<String> raceResultsNames= new ArrayList<>();
         ArrayList<Integer> positionsGained = new ArrayList<>();
-        ArrayList<String> DNamesPositionGained = new ArrayList<>();
+        ArrayList<String> positionsGainedNames = new ArrayList<>();
         ArrayList<ArrayList>  positionsPerDriver = new ArrayList<>();
         //save the qualifying, race, and difference in the results arraylist
         results.add(qualifyingResultsNames);
         results.add(raceResultsNames);
         results.add(positionsPerDriver);
         //the positions per driver will contain 2 more arraylists that each will have either the names or the position change
-        positionsPerDriver.add(DNamesPositionGained);
+        positionsPerDriver.add(positionsGainedNames);
         positionsPerDriver.add(positionsGained);
 
 
 
         ResultSet res = stmt.executeQuery("SELECT * FROM QUALIFYING WHERE DATE=" + year + " AND ROUND=" + round);
-        //the result is a row with 24 columns so in order to parse it a for loop is nested
+        //the result is a row with 24 columns so in order to parse the qualify results it a for loop is nested
         while (res.next()) {
             for (int i = 1; i < 21; i++) {
                 qualifyingResults.add(Integer.parseInt(res.getObject("Q" + i).toString()));
             }
         }
         res = stmt.executeQuery("SELECT * FROM RACES WHERE DATE=" + year + " AND ROUND=" + round);
-        //the result is a row with 24 collums so in order to parse it a for loop is nested
+        //the result is a row with 24 collums so in order to parse the race results a for loop is nested
         while (res.next()) {
             for (int i = 1; i < 21; i++) {
                 raceResults.add(Integer.parseInt(res.getObject("P" + i).toString()));
             }
         }
 
-        for (int i=0;i<20;i++){
-            //parse qualifying results
-            for (int y=0;y<20;y++){
-                //parse race results
-                if(qualifyingResults.get(i)==raceResults.get(y)){
-                    //if a driver with the same id between the two arraylists is found, compare the two positions
-                    //System.out.println("Driver with id "+qualifyingResults.get(i)+" Found \n he started on pos "+i+" and finished on pos: "+y);
+        if(raceResults.size()!=0){
+            for (int i=0;i<20;i++){
+                //parse qualifying results
+                for (int y=0;y<raceResults.size();y++){
+                    //parse race results
+                    if(qualifyingResults.get(i)==raceResults.get(y)){
 
-                    DNamesPositionGained.add(findDriverName(qualifyingResults.get(i)));
-                    positionsGained.add(y-i);
-                    //positionsPerDriver.add("\n");
+                        positionsGainedNames.add(findDriverName(qualifyingResults.get(i)));
+                        //substracting i from y gives the poistion change from qualifying to the end of race
+                        positionsGained.add(y-i);
 
-                   // positionsPerDriver.set(0,positionsPerDriver.get(0).toString()+findDriverName(qualifyingResults.get(i))+"\n");
-                    //int gap =y-i;
-                    //positionsPerDriver.set(1,positionsPerDriver.get(1).toString()+gap+"\n");
-
-
-
+                    }
                 }
             }
+        }else {
+            positionsGainedNames.add("No-data");
         }
+
         //find driver names by id and replace the Ids
-        for (int i=0;i<20;i++){
-            qualifyingResultsNames.add(findDriverName(qualifyingResults.get(i))+"\n");
-            raceResultsNames.add(findDriverName(raceResults.get(i))+"\n");
+        if(raceResults.size()!=0){
+            for (int i=0;i<raceResults.size();i++){
+                raceResultsNames.add(findDriverName(raceResults.get(i))+"\n");
+            }
+        } else{
+            raceResultsNames.add("No-data");
         }
+
+        if(qualifyingResults.size()!=0){
+            for (int i=0;i<qualifyingResults.size();i++){
+                qualifyingResultsNames.add(findDriverName(qualifyingResults.get(i))+"\n");
+            }
+        } else{
+            qualifyingResultsNames.add("No-data");
+        }
+
 
         return results;
     }
@@ -419,7 +428,6 @@ public class DBActions {
         Map<Integer, Integer> HMResult = new TreeMap<Integer, Integer>();
         ArrayList<Integer> driverIDs = parseDrivers();
         //start every driver with 0 points
-        System.out.println(driverIDs.size());
         for (int i = 0; i < driverIDs.size(); i++) {
             HMResult.put(driverIDs.get(i), 0);
         }

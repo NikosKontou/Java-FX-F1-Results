@@ -41,8 +41,9 @@
                   <Label text="Year" />
                   <TextField fx:id="yearTF" promptText="YYYY" />
                   <Label text="Round" />
-                  <TextField fx:id="roundTF" promptText="NN" />
+                  <TextField fx:id="roundTF" promptText="00-25" />
                   <Button mnemonicParsing="false" onAction="#submitRaceWeekendQuery" text="Submit" />
+                  <Label fx:id="warningLabel" />
                </children>
             </HBox>
             <HBox alignment="CENTER" spacing="40.0" BorderPane.alignment="CENTER">
