@@ -300,11 +300,21 @@ public class DBActions {
         //create an arraylist that contains 3 arraylists that contain one dimensional tables [DID, POS]
         ArrayList<ArrayList> results = new ArrayList<>();
         ArrayList<Integer> qualifyingResults = new ArrayList<>();
+        ArrayList<String>   qualifyingResultsNames= new ArrayList<>();
         ArrayList<Integer> raceResults = new ArrayList<>();
-        ArrayList<ArrayList> positionsGained = new ArrayList<>();
+        ArrayList<String> raceResultsNames= new ArrayList<>();
+        ArrayList<Integer> positionsGained = new ArrayList<>();
+        ArrayList<String> DNamesPositionGained = new ArrayList<>();
+        ArrayList<ArrayList>  positionsPerDriver = new ArrayList<>();
+        //save the qualifying, race, and difference in the results arraylist
+        results.add(qualifyingResultsNames);
+        results.add(raceResultsNames);
+        results.add(positionsPerDriver);
+        //the positions per driver will contain 2 more arraylists that each will have either the names or the position change
+        positionsPerDriver.add(DNamesPositionGained);
+        positionsPerDriver.add(positionsGained);
 
-        results.add(qualifyingResults);
-        results.add(raceResults);
+
 
         ResultSet res = stmt.executeQuery("SELECT * FROM QUALIFYING WHERE DATE=" + year + " AND ROUND=" + round);
         //the result is a row with 24 columns so in order to parse it a for loop is nested
@@ -322,11 +332,30 @@ public class DBActions {
         }
 
         for (int i=0;i<20;i++){
+            //parse qualifying results
             for (int y=0;y<20;y++){
+                //parse race results
                 if(qualifyingResults.get(i)==raceResults.get(y)){
-                    System.out.println("Driver with id "+qualifyingResults.get(i)+" Found \n he started on pos "+i+" and finished on pos: "+y);
+                    //if a driver with the same id between the two arraylists is found, compare the two positions
+                    //System.out.println("Driver with id "+qualifyingResults.get(i)+" Found \n he started on pos "+i+" and finished on pos: "+y);
+
+                    DNamesPositionGained.add(findDriverName(qualifyingResults.get(i)));
+                    positionsGained.add(y-i);
+                    //positionsPerDriver.add("\n");
+
+                   // positionsPerDriver.set(0,positionsPerDriver.get(0).toString()+findDriverName(qualifyingResults.get(i))+"\n");
+                    //int gap =y-i;
+                    //positionsPerDriver.set(1,positionsPerDriver.get(1).toString()+gap+"\n");
+
+
+
                 }
             }
+        }
+        //find driver names by id and replace the Ids
+        for (int i=0;i<20;i++){
+            qualifyingResultsNames.add(findDriverName(qualifyingResults.get(i))+"\n");
+            raceResultsNames.add(findDriverName(raceResults.get(i))+"\n");
         }
 
         return results;
