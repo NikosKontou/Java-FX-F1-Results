@@ -27,8 +27,8 @@ public class ShowRaceWeekendController {
     TextField yearTF, roundTF;
     @FXML
     GridPane resultsPane;
-    String greenColor="#bbffbb";
-    String redColor="#ffbbbb";
+    String greenColor = "#bbffbb";
+    String redColor = "#ffbbbb";
 
 
     public void initialize() {
@@ -49,21 +49,21 @@ public class ShowRaceWeekendController {
     public void submitRaceWeekendQuery(ActionEvent event) throws SQLException, ClassNotFoundException {
         DBActions dba = new DBActions();
         //check for valid inputs
-        if(CheckInputs.checkYear(yearTF.getText())&&CheckInputs.checkRound(roundTF.getText())){
+        if (CheckInputs.checkYear(yearTF.getText()) && CheckInputs.checkRound(roundTF.getText())) {
             warningLabel.setVisible(false);
 
             ArrayList<ArrayList> raceWeekendResult = dba.showRaceWeekend(Integer.parseInt(yearTF.getText()), Integer.parseInt(roundTF.getText()));
             //make the Arraylists appear pretier on the labels
             qualifyingResult.setText(String.valueOf(raceWeekendResult.get(0)).replace("[", "").replace("]", "").replace(",", "").replace(" ", ""));
             //depending on the contents display the position labels
-            if(String.valueOf(raceWeekendResult.get(1)).contains("No-data")){
+            if (String.valueOf(raceWeekendResult.get(1)).contains("No-data")) {
                 raceResultPositions.setVisible(false);
-            }else {
+            } else {
                 raceResultPositions.setVisible(true);
             }
-            if(String.valueOf(raceWeekendResult.get(0)).contains("No-data")){
+            if (String.valueOf(raceWeekendResult.get(0)).contains("No-data")) {
                 qlfResultPositions.setVisible(false);
-            } else{
+            } else {
                 qlfResultPositions.setVisible(true);
             }
             raceResult.setText(String.valueOf(raceWeekendResult.get(1)).replace("[", "").replace("]", "").replace(",", "").replace(" ", ""));
@@ -75,25 +75,24 @@ public class ShowRaceWeekendController {
 
             for (int i = 0; i < DNamesList.size() && i < posChangedList.size(); i++) {
                 //coditional formating for color
-                if(posChangedList.get(i)>0){
+                if (posChangedList.get(i) > 0) {
                     resultsPane.add(new Label(DNamesList.get(i)), 0, i);
                     resultsPane.add(new Label(posChangedList.get(i).toString()), 1, i);
-                    resultsPane.getChildren().get(i*2).setStyle("-fx-background-color: "+redColor);
-                    resultsPane.getChildren().get(i*2+1).setStyle("-fx-background-color: "+redColor);
-                }
-                else if(posChangedList.get(i)==0) {
+                    resultsPane.getChildren().get(i * 2).setStyle("-fx-background-color: " + redColor);
+                    resultsPane.getChildren().get(i * 2 + 1).setStyle("-fx-background-color: " + redColor);
+                } else if (posChangedList.get(i) == 0) {
                     resultsPane.add(new Label(DNamesList.get(i)), 0, i);
                     resultsPane.add(new Label(posChangedList.get(i).toString()), 1, i);
 
-                } else{
+                } else {
                     resultsPane.add(new Label(DNamesList.get(i)), 0, i);
                     resultsPane.add(new Label(posChangedList.get(i).toString()), 1, i);
-                    resultsPane.getChildren().get(i*2).setStyle("-fx-background-color: "+greenColor);
-                    resultsPane.getChildren().get(i*2+1).setStyle("-fx-background-color: "+greenColor);
+                    resultsPane.getChildren().get(i * 2).setStyle("-fx-background-color: " + greenColor);
+                    resultsPane.getChildren().get(i * 2 + 1).setStyle("-fx-background-color: " + greenColor);
                 }
 
             }
-        } else  {
+        } else {
             //in case of invalid input, show error message
             warningLabel.setVisible(true);
             warningLabel.setTextFill(Color.RED);
@@ -103,10 +102,10 @@ public class ShowRaceWeekendController {
 
     }
 
-    private static void populatePosLabels(String s, Label label){
+    private static void populatePosLabels(String s, Label label) {
         //label.setVisible(true);
-        for (int i=1;i<=20;i++){
-            label.setText(label.getText()+s+i+" \n");
+        for (int i = 1; i <= 20; i++) {
+            label.setText(label.getText() + s + i + " \n");
         }
     }
 }

@@ -14,21 +14,25 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ShowPointsController {
     private Stage stage;
     private Scene scene;
     private Parent root;
     @FXML
-    Label queryResult, queryResultPoints, errorMessage;
+    Label queryResult, queryResultPoints, errorMessage, nameLabel;
     @FXML
     TextField yearField;
     @FXML
     Button submitQuery;
 
+    public void initialize() {
+        nameLabel.setText(UserHolder.getUserName());
+    }
 
     public void goToMainMenuEvent(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("startingScene.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -39,32 +43,32 @@ public class ShowPointsController {
         DBActions dba = new DBActions();
         try {
             //show every result of a specific year
-            String [] result= new String[2];
-            int date=0;
-            try{
+            String[] result = new String[2];
+            int date;
+            try {
                 //save the user input in an integer
-                date = Integer.parseInt(yearField.getText().toString());
+                date = Integer.parseInt(yearField.getText());
 
-                if(!CheckInputs.checkYear(String.valueOf(date))){
-                    errorMessage.setTextFill(Color.rgb(230,50,50));
+                if (!CheckInputs.checkYear(String.valueOf(date))) {
+                    errorMessage.setTextFill(Color.rgb(230, 50, 50));
                     errorMessage.setText("You must enter a valid year (e.g. 2021)");
-                }else{
+                } else {
                     errorMessage.setText("");
                     //save the function result in order to run it only once
-                    result=dba.showDriversPerYear(date);
+                    result = dba.showDriversPerYear(date);
                     //show the names of the drivers
                     queryResult.setText(result[0]);
                     //show the points of the drivers
                     queryResultPoints.setText(result[1]);
                 }
-            }catch (NumberFormatException e){
-                errorMessage.setTextFill(Color.rgb(230,50,50));
+            } catch (NumberFormatException e) {
+                errorMessage.setTextFill(Color.rgb(230, 50, 50));
                 errorMessage.setText("You must enter only numbers");
             }
 
 
-        }catch (NullPointerException e){
-            System.out.println("Null pointer exception at submitquery event \n"+e);
+        } catch (NullPointerException e) {
+            System.out.println("Null pointer exception at submitquery event \n" + e);
         }
     }
 

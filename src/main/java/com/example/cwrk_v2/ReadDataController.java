@@ -1,10 +1,8 @@
 package com.example.cwrk_v2;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,7 +14,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,8 +22,9 @@ public class ReadDataController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
     @FXML
-    Label warningLabel, queryResultTrackName, queryResultP1, queryResultP2, queryResultP3, queryResultP4, queryResultP5, queryResultP6, queryResultP7, queryResultP8, queryResultP9, queryResultP10,
+    Label warningLabel, queryResultTrackName, nameLabel, queryResultP1, queryResultP2, queryResultP3, queryResultP4, queryResultP5, queryResultP6, queryResultP7, queryResultP8, queryResultP9, queryResultP10,
             queryResultP11, queryResultP12, queryResultP13, queryResultP14, queryResultP15, queryResultP16, queryResultP17, queryResultP18, queryResultP19, queryResultP20,
             trackNameLabel, firstLabel, secondLabel, thirdLabel, p4Label, p5Label, p6Label, p7Label, p8Label, p9Label, p10Label, p11Label, p12Label, p13Label,
             p14Label, p15Label, p16Label, p17Label, p18Label, p19Label, p20Label;
@@ -38,7 +36,9 @@ public class ReadDataController {
     @FXML
     TextField yearTF;
 
-
+    public void initialize() {
+        nameLabel.setText(UserHolder.getUserName());
+    }
     public void goToMainMenuEvent(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("startingScene.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -4,17 +4,16 @@ import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.*;
 
 public class DBActions {
-    //SE PERIPTWSI ALLAGIS DB, prepei na allaxtoun ta parakatw stoixeia
+    //In case of using a diferent database, you must change the following Strings
     private static final String DB_URL = "jdbc:h2:~/test";
     private static final String User = "sa";
     private static final String Pass = "";
-    private Connection conn = null;
-    private Statement stmt = null;
+    private Connection conn;
+    private Statement stmt;
 
     public DBActions() throws ClassNotFoundException, SQLException {
         //fortwnw tin vivliothiki
@@ -31,7 +30,7 @@ public class DBActions {
         FileActions FA = new FileActions();
         String sql = FA.load("createTables");
         //ektelesi tou querry
-        int row = stmt.executeUpdate(sql);
+        stmt.executeUpdate(sql);
     }
 
     //"gemizei" ta tables me dedomena
@@ -48,17 +47,17 @@ public class DBActions {
         //insert every 2021 and 2022 driver
         sql = FA.load("driverInfo");
         //execute the insert driver query
-        int row = stmt.executeUpdate(sql);
+        stmt.executeUpdate(sql);
 
         //insert every 2021 race result
         sql = FA.load("2021RaceInfo");
         //execute the insert  query
-        row = stmt.executeUpdate(sql);
+        stmt.executeUpdate(sql);
 
         //insert every 2021 qualifying result
         sql = FA.load("2021QLFInfo");
         //execute the insert query
-        row = stmt.executeUpdate(sql);
+        stmt.executeUpdate(sql);
     }
 
     //elenxos gia log in stin vasi
@@ -66,10 +65,9 @@ public class DBActions {
         ResultSet res = stmt.executeQuery("SELECT * FROM users");
         boolean[] result = new boolean[2];
         result[0] = false;
-        //diatrexoume olo to table users, se periptwsi pou vrethei antistoixeia metaksi tis vasis kai twn dedomenwn
-        //pou eisigage o xristiw, tha girisei true, se antitheti periptvsi false
+        //parse table users, if there is a match with the user input the function will return true
+
         while (res.next()) {
-            String uID = (res.getObject("uID").toString());
             int admin = Integer.parseInt(res.getObject("isAdmin").toString());
             String uName = (res.getObject("uName").toString());
             String uPass = (res.getObject("uPass").toString());
@@ -86,9 +84,8 @@ public class DBActions {
         return result;
     }
 
-    //eisagontai ta dedomena stin vasi mesw tou register scene
     public boolean userRegister(String username, String password) throws SQLException {
-        //se periptwsi pou yparxei to username den tha dimiourgithei o xristis
+        //only unique usernames are allowed
         boolean result = checkIfUniqueUser(username);
         if (result) {
             // to ?, ?, 0 simenei oti oloi oi users mesw tou register form den tha exoun admin priviliges
@@ -96,9 +93,9 @@ public class DBActions {
 
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, username.trim());
-            //kriptografisi kwdikou
+            //has the password
             pst.setString(2, MD5.getMd5(password.trim()));
-            //ektelesi query
+            //execute query
             pst.executeUpdate();
         }
         return result;
@@ -107,8 +104,8 @@ public class DBActions {
 
 
     public boolean insertDriver(int driverID, String driverName) throws SQLException {
-        //se periptwsi pou yparxei to dID den dimiourgeite o odigos
-        //apo to 2014 kai epeita o odigos exei monadiko gia thn f1 anagnwristiko (enas arithmos apo to 0 mexri to 99)
+        //the DID must be unique in order to save the new driver
+        //since 2014 every driver has a number that cannot be changed (from 0 to 99)
         boolean result = checkIfDriverExists(driverID);
         if (result) {
             // to ?, ?, 0 simenei oti oloi oi users mesw tou register from den tha exoun admin priviliges
@@ -125,10 +122,10 @@ public class DBActions {
     }
 
     public boolean insertRace(String trackName, int year, int round, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, int p12, int p13, int p14, int p15, int p16, int p17, int p18, int p19, int p20) throws SQLException {
-        //se periptwsi pou o sindiasmos event kai xronias iparxei, den tha dimiourgeite i engrafi
-        //vasi kanonismwn Formula One Management, den mporei na dieksaxthoun 2 agwnes stin idia pista xwris diaforetiko onoma
-        //p.x. to 2020 gia na ginoun 2 agwnes stin idia pista o enas onomastike "FORMULA 1 ROLEX GROSSER PREIS VON ÖSTERREICH 2020" kai o allos "FORMULA 1 PIRELLI GROSSER PREIS DER STEIERMARK 2020"
-        //EXEI MPEI CONSTRAINT KAI STIN VASI!!!!
+        //you cannot insert an event that already exists with the same name the same year
+        //acording to FOM regulation two events at the same track cannot have the same name
+        //e.g. at 2020 in order to have two races at the same track one was named: "FORMULA 1 ROLEX GROSSER PREIS VON ÖSTERREICH 2020" and the other "FORMULA 1 PIRELLI GROSSER PREIS DER STEIERMARK 2020"
+        //There is also costraint at the database
         boolean result = checkIfRaceExists(year, trackName);
         if (result) {
             String sql = "INSERT INTO \"RACES\"(\"TRACKNAME\",\"DATE\",\"ROUND\",\"P1\",\"P2\",\"P3\",\"P4\",\"P5\",\"P6\",\"P7\",\"P8\",\"P9\",\"P10\"," +
@@ -175,10 +172,10 @@ public class DBActions {
 
 
     public boolean insertQualifying(String trackName, int year, int round, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int p10, int p11, int p12, int p13, int p14, int p15, int p16, int p17, int p18, int p19, int p20) throws SQLException {
-        //se periptwsi pou o sindiasmos event kai xronias iparxei, den tha dimiourgeite i engrafi
-        //vasi kanonismwn Formula One Management, den mporei na dieksaxthoun 2 events stin idia pista xwris diaforetiko onoma
-        //p.x. to 2020 gia na ginoun 2 agwnes stin idia pista o enas onomastike "FORMULA 1 ROLEX GROSSER PREIS VON ÖSTERREICH 2020" kai o allos "FORMULA 1 PIRELLI GROSSER PREIS DER STEIERMARK 2020"
-        //EXEI MPEI CONSTRAINT KAI STIN VASI!!!!
+        //you cannot insert an event that already exists with the same name the same year
+        //acording to FOM regulation two events at the same track cannot have the same name
+        //e.g. at 2020 in order to have two races at the same track one was named: "FORMULA 1 ROLEX GROSSER PREIS VON ÖSTERREICH 2020" and the other "FORMULA 1 PIRELLI GROSSER PREIS DER STEIERMARK 2020"
+        //There is also costraint at the database
         boolean result = checkIfQualifyingExists(year, trackName);
         if (result) {
             String sql = "INSERT INTO \"QUALIFYING\"(\"TRACKNAME\",\"DATE\",\"ROUND\",\"Q1\",\"Q2\",\"Q3\",\"Q4\",\"Q5\",\"Q6\",\"Q7\",\"Q8\",\"Q9\",\"Q10\"," +
@@ -214,17 +211,13 @@ public class DBActions {
             } catch (JdbcSQLIntegrityConstraintViolationException e) {
                 System.out.println("Most likely you have entered a driver id that does not exist in the DB \n more details: " + e);
                 result = false;
-
             }
-
         }
         System.out.println(result);
         return result;
-
     }
 
-
-    //elenxos oti o kainourgios xristis den exei idio username me proiparxwn
+    //check that a new user does not register with an allready taken name
     public boolean checkIfUniqueUser(String username) throws SQLException {
         boolean uniqueUser = true;
         //pairnei ola to username apo tin ontotita stin vasi
@@ -260,7 +253,7 @@ public class DBActions {
     }
 
 
-    //elenxos monadikotitas agwna prin apostalei stin vasi
+    //check that the race is unique, before inserting into the DB
     public boolean checkIfQualifyingExists(int year, String trackName) throws SQLException {
         boolean uniqueRace = true;
         //get every race from the database
@@ -295,17 +288,16 @@ public class DBActions {
         return doesNotExist;
     }
 
-
     public ArrayList<ArrayList> showRaceWeekend(int year, int round) throws SQLException {
         //create an arraylist that contains 3 arraylists that contain one dimensional tables [DID, POS]
         ArrayList<ArrayList> results = new ArrayList<>();
         ArrayList<Integer> qualifyingResults = new ArrayList<>();
-        ArrayList<String>   qualifyingResultsNames= new ArrayList<>();
+        ArrayList<String> qualifyingResultsNames = new ArrayList<>();
         ArrayList<Integer> raceResults = new ArrayList<>();
-        ArrayList<String> raceResultsNames= new ArrayList<>();
+        ArrayList<String> raceResultsNames = new ArrayList<>();
         ArrayList<Integer> positionsGained = new ArrayList<>();
         ArrayList<String> positionsGainedNames = new ArrayList<>();
-        ArrayList<ArrayList>  positionsPerDriver = new ArrayList<>();
+        ArrayList<ArrayList> positionsPerDriver = new ArrayList<>();
         //save the qualifying, race, and difference in the results arraylist
         results.add(qualifyingResultsNames);
         results.add(raceResultsNames);
@@ -313,10 +305,7 @@ public class DBActions {
         //the positions per driver will contain 2 more arraylists that each will have either the names or the position change
         positionsPerDriver.add(positionsGainedNames);
         positionsPerDriver.add(positionsGained);
-
-
-
-        ResultSet res = stmt.executeQuery("SELECT * FROM QUALIFYING WHERE DATE=" + year + " AND ROUND=" + round);
+                ResultSet res = stmt.executeQuery("SELECT * FROM QUALIFYING WHERE DATE=" + year + " AND ROUND=" + round);
         //the result is a row with 24 columns so in order to parse the qualify results it a for loop is nested
         while (res.next()) {
             for (int i = 1; i < 21; i++) {
@@ -331,42 +320,37 @@ public class DBActions {
             }
         }
 
-        if(raceResults.size()!=0){
-            for (int i=0;i<20;i++){
+        if (raceResults.size() != 0 &&qualifyingResults.size()!=0) {
+            for (int i = 0; i < 20; i++) {
                 //parse qualifying results
-                for (int y=0;y<raceResults.size();y++){
+                for (int y = 0; y < raceResults.size(); y++) {
                     //parse race results
-                    if(qualifyingResults.get(i)==raceResults.get(y)){
-
+                    if (qualifyingResults.get(i) == raceResults.get(y)) {
                         positionsGainedNames.add(findDriverName(qualifyingResults.get(i)));
                         //substracting i from y gives the poistion change from qualifying to the end of race
-                        positionsGained.add(y-i);
-
+                        positionsGained.add(y - i);
                     }
                 }
             }
-        }else {
+        } else {
             positionsGainedNames.add("No-data");
         }
 
         //find driver names by id and replace the Ids
-        if(raceResults.size()!=0){
-            for (int i=0;i<raceResults.size();i++){
-                raceResultsNames.add(findDriverName(raceResults.get(i))+"\n");
+        if (raceResults.size() != 0) {
+            for (int i = 0; i < raceResults.size(); i++) {
+                raceResultsNames.add(findDriverName(raceResults.get(i)) + "\n");
             }
-        } else{
+        } else {
             raceResultsNames.add("No-data");
         }
-
-        if(qualifyingResults.size()!=0){
-            for (int i=0;i<qualifyingResults.size();i++){
-                qualifyingResultsNames.add(findDriverName(qualifyingResults.get(i))+"\n");
+        if (qualifyingResults.size() != 0) {
+            for (int i = 0; i < qualifyingResults.size(); i++) {
+                qualifyingResultsNames.add(findDriverName(qualifyingResults.get(i)) + "\n");
             }
-        } else{
+        } else {
             qualifyingResultsNames.add("No-data");
         }
-
-
         return results;
     }
 
@@ -382,16 +366,12 @@ public class DBActions {
         ResultSet res = stmt.executeQuery("SELECT * FROM RACES where date = " + year + " order by round");
 
         while (res.next()) {
-
             String trackName = (res.getObject("TRACKNAME")).toString();
             String tName = trackName.substring(0, 5).toUpperCase(Locale.ROOT);
-
-
             trackNames.add(tName + "\n");
             //parse evey position and save it in the string
             for (int i = 0; i < 20; i++) {
                 driverNames.add("");
-
             }
             //every year there are 20 drivers
             for (int i = 1; i < 21; i++) {
@@ -411,10 +391,10 @@ public class DBActions {
         while (res.next()) {
             int driverID = Integer.parseInt(String.valueOf((res.getObject("dID"))));
             String driverName = String.valueOf((res.getObject("dName")));
-            //ean uparxei to antisto driverName to apothikevi
+            //save driver name
             if (dID == driverID) {
-                //gia na girisei mono ta 3 prwta gramma tou epithetou se UPPERcase
-                //p.x. o Charles Leclerc tha ginei LEC
+                //the following will insert in dName the first three letter of drivers last name
+                //e.g. Charles Leclerc will turn into LEC
                 dName = driverName.substring(driverName.indexOf(" ") + 1).substring(0, 3).toUpperCase(Locale.ROOT);
             }
         }
@@ -489,7 +469,6 @@ public class DBActions {
             i++;
         }
         return results;
-
     }
 
     public void cleanUp() throws SQLException {

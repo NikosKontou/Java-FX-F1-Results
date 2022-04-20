@@ -28,5 +28,5 @@ data/*
 .json
 
 # custom additions
-.jpg
-.xlsx
+*.jpg
+*.xlsx
