@@ -32,10 +32,8 @@
    <center>
       <VBox>
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+            <HBox alignment="CENTER" prefHeight="70.0" spacing="40.0">
                <children>
-                  <Label fx:id="Round" text="round" />
-                  <TextField fx:id="round" promptText="NN" />
                   <Label fx:id="submitResultLabel" />
                </children>
             </HBox>
@@ -43,6 +41,11 @@
                <children>
                   <Label text="Year:" />
                   <TextField fx:id="year" promptText="YYYY" />
+                  <Label fx:id="Round" text="Round:" />
+                  <TextField fx:id="round" promptText="NN">
+                     <tooltip>
+                        <Tooltip text="0-25" />
+                     </tooltip></TextField>
                   <Label text="Track name:" />
                   <TextField fx:id="trackName" />
                </children>

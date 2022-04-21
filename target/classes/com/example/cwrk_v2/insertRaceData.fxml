@@ -10,7 +10,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cwrk_v2.InsertRaceDataController">
    <top>
-      <VBox alignment="CENTER" spacing="10.0">
+      <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #bbbbbb;">
          <children>
             <HBox alignment="CENTER" spacing="20.0">
                <children>
@@ -18,24 +18,22 @@
                   <Label fx:id="nameLabel" />
                </children>
             </HBox>
-            <Label contentDisplay="CENTER" text="Insert race data" textAlignment="CENTER">
+            <Label contentDisplay="CENTER" text="Insert Race or Quali." textAlignment="CENTER">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
          </children>
          <padding>
-            <Insets top="10.0" />
+            <Insets bottom="10.0" top="10.0" />
          </padding>
       </VBox>
    </top>
    <center>
       <VBox>
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+            <HBox alignment="CENTER" prefHeight="70.0" spacing="40.0">
                <children>
-                  <Label fx:id="Round" text="round" />
-                  <TextField fx:id="round" promptText="NN" />
                   <Label fx:id="submitResultLabel" />
                </children>
             </HBox>
@@ -43,6 +41,11 @@
                <children>
                   <Label text="Year:" />
                   <TextField fx:id="year" promptText="YYYY" />
+                  <Label fx:id="Round" text="Round:" />
+                  <TextField fx:id="round" promptText="NN">
+                     <tooltip>
+                        <Tooltip text="0-25" />
+                     </tooltip></TextField>
                   <Label text="Track name:" />
                   <TextField fx:id="trackName" />
                </children>

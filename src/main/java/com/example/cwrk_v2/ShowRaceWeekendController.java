@@ -74,6 +74,9 @@ public class ShowRaceWeekendController {
             resultsPane.getChildren().clear();
 
             for (int i = 0; i < DNamesList.size() && i < posChangedList.size(); i++) {
+                //there is a bug that for 2022, round 10 the Arraylist dnmaes and pos change return 343 rows
+                //positionsGainedNames, positionsGained from DBA
+                System.out.println("entered loop");
                 //coditional formating for color
                 if (posChangedList.get(i) > 0) {
                     resultsPane.add(new Label(DNamesList.get(i)), 0, i);

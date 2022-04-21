@@ -46,7 +46,13 @@
             <HBox alignment="CENTER">
                <children>
                   <Label fx:id="queryResult" BorderPane.alignment="CENTER" />
-                  <Label fx:id="queryResultPoints" />
+                  <Label fx:id="queryResultPoints">
+                     <tooltip>
+                        <Tooltip text="Every driver dinishing in the top 10 of every race is awarded points, the sum of which is displayed here" wrapText="true">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Tooltip>
+                     </tooltip></Label>
                </children>
             </HBox>
          </children>
